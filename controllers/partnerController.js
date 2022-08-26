@@ -6,6 +6,9 @@ const Category = require("../models/categoryModel");
 const Product = require("../models/productModel");
 const User = require("../models/userModel");
 const APIFeatures = require("../utils/apiFeatures");
+const factory = require('./handlerFactory');
+const Notification = require('../utils/notification');
+const SMS = require('../utils/sms');
 
 exports.protect = catchAsync(async (req, res, next) => {
   let currentPartner = await Partner.findOne({ managerId: req.user._id });
@@ -325,6 +328,41 @@ exports.deleteProduct = catchAsync(async (req, res, next) => {
     data: productDoc,
   });
 });
+
+exports.getProducts = catchAsync(async (req, res, next) => {
+  const filter = { partnerId: req.partner._id, isActive: true };
+
+  const features = new APIFeatures(
+    Product.find(filter)
+      .sort('name')
+      .populate({ path: 'categoriesId' }),
+    req.query
+  )
+    .filter()
+    .sort()
+    .limitFields()
+    .paginate();
+
+  const doc = await features.query;
+
+  res.status(200).json({
+    status: 'success',
+    data: doc
+  });
+});
+exports.getProduct = catchAsync(async (req, res, next) => {
+  const doc = await Product.findOne({
+    _id: req.params.id,
+    partnerId: req.partner._id
+  });
+
+  res.status(200).json({
+    status: 'success',
+    data: doc
+  });
+});
+
+
 exports.createProduct = catchAsync(async (req, res, next) => {
   req.body.partnerId = req.partner._id;
   req.body.isActive = true;
@@ -340,7 +378,7 @@ exports.createProduct = catchAsync(async (req, res, next) => {
   }
 
   req.body.slug = slugify(
-    `${req.body.name}-${req.partner.businessDetails.businessName}`,
+    `${req.body.name}`,
     { lower: true }
   );
 
@@ -352,24 +390,147 @@ exports.createProduct = catchAsync(async (req, res, next) => {
   }
 
   const productDoc = await Product.create(req.body);
-
-  let profileScore = 0;
-
-  if (
-    productDoc.categoriesId.length > 0 &&
-    productDoc.categoriesId.length <= 100
-  )
-    profileScore += 5;
-  if (productDoc.images.length > 0) profileScore += 5;
-  if (productDoc.description && productDoc.description.length > 20)
-    profileScore += 5;
-  if (productDoc.tags.length > 0) profileScore += 5;
-  if (productDoc.attributes.length > 0) profileScore += 5;
-  productDoc.profileScore = profileScore;
   await productDoc.save();
 
   res.status(200).json({
     status: "success",
     data: productDoc,
+  });
+});
+
+
+exports.updateProduct = catchAsync(async (req, res, next) => {
+  const filteredObj = factory.filterObj(
+    req.body,
+    'name',
+    'categoriesId',
+    'slug',
+    'orderQuantity',
+    'description',
+    'variants',
+    'isOutOfStock',
+    'isListingOn',
+    'isVegan',
+    'isNonVegan',
+    'tags',
+    'orderLimit'
+  );
+  const doc = await Product.findOne({
+    _id: req.params.id,
+    partnerId: req.partner._id
+  });
+  if (req.body.name && req.body.name !== doc.name) {
+    req.body.slug = slugify(
+      `${req.body.name}-${req.partner.name}`,
+      { lower: true }
+    );
+
+    const productDoc = await Product.findOne({ slug: req.body.slug });
+    if (productDoc) {
+      req.body.slug = `${productDoc.slug}-${Math.floor(
+        Math.random() * (9999 - 1000) + 1000
+      )}`;
+    }
+    filteredObj.slug = req.body.slug;
+  }
+  const productDoc = await Product.findOneAndUpdate(
+    { _id: req.params.id, partnerId: req.partner._id },
+    filteredObj,
+    { new: true, runValidators: true }
+  );
+
+  if (!productDoc) {
+    return next(new AppError('No document found with that ID', 404));
+  }
+  await productDoc.save();
+
+  res.status(200).json({
+    status: 'success',
+    data: productDoc
+  });
+});
+
+
+exports.applyForPartner = catchAsync(async (req, res, next) => {
+  if (!req.body.address || !req.body.address.pinCode) {
+    req.body.address = undefined;
+  }
+  const filteredBody = factory.filterRestrictedFields(
+    req.body,
+    'status',
+    'isActive',
+    'isBlocked',
+    'isVerified',
+  );
+  req.body = filteredBody;
+
+  const userPhone = req.body.phone;
+  let partnerOwner = await User.findOne({ phone: userPhone });
+  // const mobileIsAlreadyUsed = await Partner.findOne({ phone: userPhone });
+  if (partnerOwner) {
+    return next(
+      new AppError('Duplicate Request For Partner Registration', 404)
+    );
+  }
+  if (!req.body.phone) {
+    return next(new AppError('Please Provide orwner details', 404));
+  }
+  const newUserCreate = {
+    firstName: req.body.firstName,
+    lastName: req.body.lastName,
+    phone: req.body.phone,
+    email: req.body.email,
+    role: 'partner'
+  };
+  if (partnerOwner) {
+    req.body.managerId = partnerOwner._id;
+    partnerOwner = await User.findByIdAndUpdate(
+      partnerOwner._id,
+      newUserCreate
+    );
+  } else {
+    // Create New User Account
+    partnerOwner = await User.create(newUserCreate);
+    req.body.managerId = partnerOwner._id;
+  }
+
+  req.body.userName = `${req.body.name}${Math.floor(
+    Math.random() * (999999 - 100000)
+  ) + 100000}`;
+  req.body.userName = req.body.userName.replace(' ', '');
+
+  req.body.slug = slugify(req.body.name, { lower: true });
+  req.body.slug = `${req.body.slug}-${Math.floor(
+    Math.random() * (999999 - 100000)
+  ) + 100000}`;
+
+  const mDoc = await Partner.findOne({ slug: req.body.slug });
+  if (mDoc) {
+    req.body.slug = `${req.body.slug}-${Math.floor(
+      Math.random() * (999999 - 100000)
+    ) + 100000}`;
+  }
+
+  const newPartner = await Partner.create(req.body);
+
+  //send Partner Welcome
+  await new SMS(userPhone).sendPartner('partner-welcome-message', {
+    name: req.body.firstName
+  });
+
+  await new Notification(req.phone).sendToPartner(
+    'partner-welcome-message',
+    {
+      partnerId: newPartner._id,
+      name: req.body.firstName,
+      email: req.body.email,
+      phone: req.body.phone,
+      shopname: req.body.name
+    }
+  );
+
+  res.status(201).json({
+    status: 'success',
+    data: newPartner
   });
 });
