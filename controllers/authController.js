@@ -64,22 +64,13 @@ exports.login = catchAsync(async (req, res, next) => {
   if (OTP && OTP.length === 6 && getUserByPhone) {
     const userWithOTP = await User.findOne({
       phone: req.body.phone,
-    }).select("+OTP +OTPVerifyAttempts +OTPRequests");
-    if (userWithOTP.OTPVerifyAttempts === 5) {
-      return next(new AppError("Too much OTP verification attempts", 403));
-    }
+    }).select("+OTP");
     // eslint-disable-next-line eqeqeq
     if (!userWithOTP || !(OTP == userWithOTP.OTP)) {
-      userWithOTP.OTPVerifyAttempts++;
       await userWithOTP.save();
       return next(new AppError("Invalid OTP ", 404));
     }
-    userWithOTP.loggedInDevices.length >= 6
-      ? userWithOTP.loggedInDevices.shift()
-      : false;
     userWithOTP.OTP = undefined;
-    userWithOTP.OTPVerifyAttempts = undefined;
-    userWithOTP.OTPRequests = undefined;
     await userWithOTP.save();
     createSendToken(userWithOTP, 200, req, res);
   } else {
@@ -92,20 +83,8 @@ exports.login = catchAsync(async (req, res, next) => {
     }
     // 1) Get user from collection
     const userInfo = await User.findById(getUserByPhone._id).select(
-      "+OTP +OTPVerifyAttempts +OTPRequests"
+      "+OTP"
     );
-
-    if (Date.now() - new Date(userInfo.updatedAt).getTime() >= 60 * 60 * 1000) {
-      userInfo.OTPVerifyAttempts = 0;
-      userInfo.OTPRequests = 0;
-    }
-    if (userInfo.OTPRequests === 5) {
-      return next(
-        new AppError("Too many OTP requests, please try after some time", 400)
-      );
-    }
-    userInfo.OTPRequests ? userInfo.OTPRequests++ : (userInfo.OTPRequests = 1);
-    userInfo.OTPVerifyAttempts = 0;
     // 2) If so, update password
     userInfo.OTP = Math.floor(Math.random() * (999999 - 100000)) + 100000;
     switch (getUserByPhone.phone) {
@@ -163,9 +142,7 @@ exports.protect = catchAsync(async (req, res, next) => {
   // 2) Verification token
   const decoded = await promisify(jwt.verify)(token, process.env.JWT_SECRET);
   // 3) Check if user still exists
-  const currentUser = await User.findOne({
-    $and: [{ _id: decoded.id }, { loggedInDevices: { $in: token } }],
-  });
+  const currentUser = await User.findOne({ _id: decoded.id });
   if (!currentUser || !currentUser.isActive) {
     return next(
       new AppError(
