@@ -1,0 +1,1889 @@
+{
+	"info": {
+		"_postman_id": "17927022-6708-4700-be83-81ac05bcab11",
+		"name": "OrderMenu",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "19044766"
+	},
+	"item": [
+		{
+			"name": "Auth",
+			"item": [
+				{
+					"name": "Send OTP",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"phone\": \"7879553208\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://ordmnu.herokuapp.com/api/v1/users/login",
+							"protocol": "https",
+							"host": [
+								"ordmnu.herokuapp.com"
+							],
+							"path": [
+								"api",
+								"v1",
+								"users",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Verify OTP",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"let response = pm.response.json();",
+									"pm.environment.set('authtoken',response.accessToken);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"phone\": \"7879553208\",\n    \"OTP\": \"345678\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://ordmnu.herokuapp.com/api/v1/users/login",
+							"protocol": "https",
+							"host": [
+								"ordmnu.herokuapp.com"
+							],
+							"path": [
+								"api",
+								"v1",
+								"users",
+								"login"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Users",
+			"item": [
+				{
+					"name": "Get User",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"let response = pm.response.json();",
+									"pm.environment.set('authtoken',response.accessToken);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://ordmnu.herokuapp.com/api/v1/users/me",
+							"protocol": "https",
+							"host": [
+								"ordmnu.herokuapp.com"
+							],
+							"path": [
+								"api",
+								"v1",
+								"users",
+								"me"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "success",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "https://ordmnu.herokuapp.com/api/v1/users/me",
+									"protocol": "https",
+									"host": [
+										"ordmnu.herokuapp.com"
+									],
+									"path": [
+										"api",
+										"v1",
+										"users",
+										"me"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-DNS-Prefetch-Control",
+									"value": "off"
+								},
+								{
+									"key": "X-Frame-Options",
+									"value": "SAMEORIGIN"
+								},
+								{
+									"key": "Strict-Transport-Security",
+									"value": "max-age=15552000; includeSubDomains"
+								},
+								{
+									"key": "X-Download-Options",
+									"value": "noopen"
+								},
+								{
+									"key": "X-Content-Type-Options",
+									"value": "nosniff"
+								},
+								{
+									"key": "X-XSS-Protection",
+									"value": "1; mode=block"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "X-RateLimit-Limit",
+									"value": "1000"
+								},
+								{
+									"key": "X-RateLimit-Remaining",
+									"value": "990"
+								},
+								{
+									"key": "Date",
+									"value": "Sat, 06 Aug 2022 21:29:16 GMT"
+								},
+								{
+									"key": "X-RateLimit-Reset",
+									"value": "1659824755"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "485"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"1e5-36iS86l0SscshrZHx+0JYgYP6IA\""
+								},
+								{
+									"key": "Vary",
+									"value": "Accept-Encoding"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"_id\": \"62eedb2bccba9306d79c93e7\",\n    \"firstName\": \"Shekhar\",\n    \"lastName\": \"Patel\",\n    \"email\": \"shekhar@gmail.com\",\n    \"phone\": \"7879553209\",\n    \"role\": \"partner\",\n    \"tags\": [],\n    \"appTheme\": \"system\",\n    \"loggedInDevices\": [\n        \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyZWVkYjJiY2NiYTkzMDZkNzljOTNlNyIsImlhdCI6MTY1OTgyMTI2MiwiZXhwIjoxNjYyNDEzMjYyfQ.bEoYZqox9dVCsqy0QUlalUbUbPRha1lqkrmZCgE-XQc\"\n    ],\n    \"isBlocked\": false,\n    \"isActive\": true,\n    \"createdAt\": \"2022-08-06T21:20:43.226Z\",\n    \"updatedAt\": \"2022-08-06T21:29:10.259Z\",\n    \"__v\": 0\n}"
+						}
+					]
+				},
+				{
+					"name": "Update",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"let response = pm.response.json();",
+									"pm.environment.set('authtoken',response.accessToken);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"firstName\": \"Shekhar\",\n    \"lastName\": \"Patel\",\n    \"email\": \"computershekhar@gmail.com\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://ordmnu.herokuapp.com/api/v1/users/updateMe",
+							"protocol": "https",
+							"host": [
+								"ordmnu.herokuapp.com"
+							],
+							"path": [
+								"api",
+								"v1",
+								"users",
+								"updateMe"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "success",
+							"originalRequest": {
+								"method": "PATCH",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"firstName\": \"Shekhar\",\n    \"lastName\": \"Patel\",\n    \"email\": \"computershekhar@gmail.com\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "https://ordmnu.herokuapp.com/api/v1/users/updateMe",
+									"protocol": "https",
+									"host": [
+										"ordmnu.herokuapp.com"
+									],
+									"path": [
+										"api",
+										"v1",
+										"users",
+										"updateMe"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-DNS-Prefetch-Control",
+									"value": "off"
+								},
+								{
+									"key": "X-Frame-Options",
+									"value": "SAMEORIGIN"
+								},
+								{
+									"key": "Strict-Transport-Security",
+									"value": "max-age=15552000; includeSubDomains"
+								},
+								{
+									"key": "X-Download-Options",
+									"value": "noopen"
+								},
+								{
+									"key": "X-Content-Type-Options",
+									"value": "nosniff"
+								},
+								{
+									"key": "X-XSS-Protection",
+									"value": "1; mode=block"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "X-RateLimit-Limit",
+									"value": "1000"
+								},
+								{
+									"key": "X-RateLimit-Remaining",
+									"value": "989"
+								},
+								{
+									"key": "Date",
+									"value": "Sat, 06 Aug 2022 21:29:33 GMT"
+								},
+								{
+									"key": "X-RateLimit-Reset",
+									"value": "1659824755"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "530"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"212-s4AIl+Zuvu+DbOYz+JkY+HgsLWA\""
+								},
+								{
+									"key": "Vary",
+									"value": "Accept-Encoding"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"status\": \"success\",\n    \"data\": {\n        \"user\": {\n            \"_id\": \"62eedb2bccba9306d79c93e7\",\n            \"firstName\": \"Shekhar\",\n            \"lastName\": \"Patel\",\n            \"email\": \"computershekhar@gmail.com\",\n            \"phone\": \"7879553209\",\n            \"role\": \"partner\",\n            \"tags\": [],\n            \"appTheme\": \"system\",\n            \"loggedInDevices\": [\n                \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyZWVkYjJiY2NiYTkzMDZkNzljOTNlNyIsImlhdCI6MTY1OTgyMTI2MiwiZXhwIjoxNjYyNDEzMjYyfQ.bEoYZqox9dVCsqy0QUlalUbUbPRha1lqkrmZCgE-XQc\"\n            ],\n            \"isBlocked\": false,\n            \"isActive\": true,\n            \"createdAt\": \"2022-08-06T21:20:43.226Z\",\n            \"updatedAt\": \"2022-08-06T21:29:33.270Z\",\n            \"__v\": 0\n        }\n    }\n}"
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "Partners",
+			"item": [
+				{
+					"name": "Categories",
+					"item": [
+						{
+							"name": "Create Categories",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"let response = pm.response.json();",
+											"pm.environment.set('authtoken',response.accessToken);"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"name\": \"Fast Food 3\",\n    \"description\": \"description will be here!\",\n    \"image\": \"https://cdn0.iconfinder.com/data/icons/metaphoricon-essentials-vol-3/128/food-basket-shopping_basket-groceries-products-grocery-512.png\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "https://ordmnu.herokuapp.com/api/v1/partners/categories",
+									"protocol": "https",
+									"host": [
+										"ordmnu.herokuapp.com"
+									],
+									"path": [
+										"api",
+										"v1",
+										"partners",
+										"categories"
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "Create Categories",
+									"originalRequest": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"name\": \"Fast Food 3\",\n    \"description\": \"description will be here!\",\n    \"image\": \"https://cdn0.iconfinder.com/data/icons/metaphoricon-essentials-vol-3/128/food-basket-shopping_basket-groceries-products-grocery-512.png\"\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "https://ordmnu.herokuapp.com/api/v1/partners/categories",
+											"protocol": "https",
+											"host": [
+												"ordmnu.herokuapp.com"
+											],
+											"path": [
+												"api",
+												"v1",
+												"partners",
+												"categories"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "X-DNS-Prefetch-Control",
+											"value": "off"
+										},
+										{
+											"key": "X-Frame-Options",
+											"value": "SAMEORIGIN"
+										},
+										{
+											"key": "Strict-Transport-Security",
+											"value": "max-age=15552000; includeSubDomains"
+										},
+										{
+											"key": "X-Download-Options",
+											"value": "noopen"
+										},
+										{
+											"key": "X-Content-Type-Options",
+											"value": "nosniff"
+										},
+										{
+											"key": "X-XSS-Protection",
+											"value": "1; mode=block"
+										},
+										{
+											"key": "Access-Control-Allow-Origin",
+											"value": "*"
+										},
+										{
+											"key": "X-RateLimit-Limit",
+											"value": "1000"
+										},
+										{
+											"key": "X-RateLimit-Remaining",
+											"value": "997"
+										},
+										{
+											"key": "Date",
+											"value": "Fri, 26 Aug 2022 18:03:11 GMT"
+										},
+										{
+											"key": "X-RateLimit-Reset",
+											"value": "1661540485"
+										},
+										{
+											"key": "Content-Type",
+											"value": "application/json; charset=utf-8"
+										},
+										{
+											"key": "Content-Length",
+											"value": "396"
+										},
+										{
+											"key": "ETag",
+											"value": "W/\"18c-ZCZDyGrpZFNErNxKj3cHG6OBpco\""
+										},
+										{
+											"key": "Vary",
+											"value": "Accept-Encoding"
+										},
+										{
+											"key": "Connection",
+											"value": "keep-alive"
+										},
+										{
+											"key": "Keep-Alive",
+											"value": "timeout=5"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"status\": \"success\",\n    \"data\": {\n        \"partnerId\": \"60b239f4454fc80015592fd0\",\n        \"name\": \"Fast Food 3\",\n        \"image\": \"https://cdn0.iconfinder.com/data/icons/metaphoricon-essentials-vol-3/128/food-basket-shopping_basket-groceries-products-grocery-512.png\",\n        \"description\": \"description will be here!\",\n        \"_id\": \"63090adff36a793a0c4eca5b\",\n        \"createdAt\": \"2022-08-26T18:03:11.992Z\",\n        \"updatedAt\": \"2022-08-26T18:03:11.992Z\",\n        \"__v\": 0\n    }\n}"
+								}
+							]
+						},
+						{
+							"name": "Update Category",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"let response = pm.response.json();",
+											"pm.environment.set('authtoken',response.accessToken);"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "PATCH",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"name\": \"Fast Food - Update\",\n    \"description\": \"Updated description will be here!\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "https://ordmnu.herokuapp.com/api/v1/partners/categories/63090adff36a793a0c4eca5b",
+									"protocol": "https",
+									"host": [
+										"ordmnu.herokuapp.com"
+									],
+									"path": [
+										"api",
+										"v1",
+										"partners",
+										"categories",
+										"63090adff36a793a0c4eca5b"
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "Update Category",
+									"originalRequest": {
+										"method": "PATCH",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"name\": \"Fast Food - Update\",\n    \"description\": \"Updated description will be here!\"\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "https://ordmnu.herokuapp.com/api/v1/partners/categories/63090adff36a793a0c4eca5b",
+											"protocol": "https",
+											"host": [
+												"ordmnu.herokuapp.com"
+											],
+											"path": [
+												"api",
+												"v1",
+												"partners",
+												"categories",
+												"63090adff36a793a0c4eca5b"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "X-DNS-Prefetch-Control",
+											"value": "off"
+										},
+										{
+											"key": "X-Frame-Options",
+											"value": "SAMEORIGIN"
+										},
+										{
+											"key": "Strict-Transport-Security",
+											"value": "max-age=15552000; includeSubDomains"
+										},
+										{
+											"key": "X-Download-Options",
+											"value": "noopen"
+										},
+										{
+											"key": "X-Content-Type-Options",
+											"value": "nosniff"
+										},
+										{
+											"key": "X-XSS-Protection",
+											"value": "1; mode=block"
+										},
+										{
+											"key": "Access-Control-Allow-Origin",
+											"value": "*"
+										},
+										{
+											"key": "X-RateLimit-Limit",
+											"value": "1000"
+										},
+										{
+											"key": "X-RateLimit-Remaining",
+											"value": "996"
+										},
+										{
+											"key": "Date",
+											"value": "Fri, 26 Aug 2022 18:03:41 GMT"
+										},
+										{
+											"key": "X-RateLimit-Reset",
+											"value": "1661540485"
+										},
+										{
+											"key": "Content-Type",
+											"value": "application/json; charset=utf-8"
+										},
+										{
+											"key": "Content-Length",
+											"value": "411"
+										},
+										{
+											"key": "ETag",
+											"value": "W/\"19b-/NOzj1k7TmgmC4lN0RB0/SeI0wY\""
+										},
+										{
+											"key": "Vary",
+											"value": "Accept-Encoding"
+										},
+										{
+											"key": "Connection",
+											"value": "keep-alive"
+										},
+										{
+											"key": "Keep-Alive",
+											"value": "timeout=5"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"status\": \"success\",\n    \"data\": {\n        \"_id\": \"63090adff36a793a0c4eca5b\",\n        \"partnerId\": \"60b239f4454fc80015592fd0\",\n        \"name\": \"Fast Food - Update\",\n        \"image\": \"https://cdn0.iconfinder.com/data/icons/metaphoricon-essentials-vol-3/128/food-basket-shopping_basket-groceries-products-grocery-512.png\",\n        \"description\": \"Updated description will be here!\",\n        \"createdAt\": \"2022-08-26T18:03:11.992Z\",\n        \"updatedAt\": \"2022-08-26T18:03:41.447Z\",\n        \"__v\": 0\n    }\n}"
+								}
+							]
+						},
+						{
+							"name": "Get All Categories",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"let response = pm.response.json();",
+											"pm.environment.set('authtoken',response.accessToken);"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "https://ordmnu.herokuapp.com/api/v1/partners/categories",
+									"protocol": "https",
+									"host": [
+										"ordmnu.herokuapp.com"
+									],
+									"path": [
+										"api",
+										"v1",
+										"partners",
+										"categories"
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "Get All Categories",
+									"originalRequest": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "https://ordmnu.herokuapp.com/api/v1/partners/categories",
+											"protocol": "https",
+											"host": [
+												"ordmnu.herokuapp.com"
+											],
+											"path": [
+												"api",
+												"v1",
+												"partners",
+												"categories"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "X-DNS-Prefetch-Control",
+											"value": "off"
+										},
+										{
+											"key": "X-Frame-Options",
+											"value": "SAMEORIGIN"
+										},
+										{
+											"key": "Strict-Transport-Security",
+											"value": "max-age=15552000; includeSubDomains"
+										},
+										{
+											"key": "X-Download-Options",
+											"value": "noopen"
+										},
+										{
+											"key": "X-Content-Type-Options",
+											"value": "nosniff"
+										},
+										{
+											"key": "X-XSS-Protection",
+											"value": "1; mode=block"
+										},
+										{
+											"key": "Access-Control-Allow-Origin",
+											"value": "*"
+										},
+										{
+											"key": "X-RateLimit-Limit",
+											"value": "1000"
+										},
+										{
+											"key": "X-RateLimit-Remaining",
+											"value": "999"
+										},
+										{
+											"key": "Date",
+											"value": "Fri, 26 Aug 2022 18:04:54 GMT"
+										},
+										{
+											"key": "X-RateLimit-Reset",
+											"value": "1661540692"
+										},
+										{
+											"key": "Content-Type",
+											"value": "application/json; charset=utf-8"
+										},
+										{
+											"key": "Content-Length",
+											"value": "405"
+										},
+										{
+											"key": "ETag",
+											"value": "W/\"195-Zi+aAe7/ckjHClu31i8isoQIstY\""
+										},
+										{
+											"key": "Vary",
+											"value": "Accept-Encoding"
+										},
+										{
+											"key": "Connection",
+											"value": "keep-alive"
+										},
+										{
+											"key": "Keep-Alive",
+											"value": "timeout=5"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"status\": \"success\",\n    \"data\": [\n        {\n            \"_id\": \"63090adff36a793a0c4eca5b\",\n            \"partnerId\": \"60b239f4454fc80015592fd0\",\n            \"name\": \"Fast Food - Update\",\n            \"image\": \"https://cdn0.iconfinder.com/data/icons/metaphoricon-essentials-vol-3/128/food-basket-shopping_basket-groceries-products-grocery-512.png\",\n            \"description\": \"Updated description will be here!\",\n            \"createdAt\": \"2022-08-26T18:03:11.992Z\",\n            \"updatedAt\": \"2022-08-26T18:03:41.447Z\"\n        }\n    ]\n}"
+								}
+							]
+						},
+						{
+							"name": "Get Category",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"let response = pm.response.json();",
+											"pm.environment.set('authtoken',response.accessToken);"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "https://ordmnu.herokuapp.com/api/v1/partners/categories/63090adff36a793a0c4eca5b",
+									"protocol": "https",
+									"host": [
+										"ordmnu.herokuapp.com"
+									],
+									"path": [
+										"api",
+										"v1",
+										"partners",
+										"categories",
+										"63090adff36a793a0c4eca5b"
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "Get Category",
+									"originalRequest": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "https://ordmnu.herokuapp.com/api/v1/partners/categories/63090adff36a793a0c4eca5b",
+											"protocol": "https",
+											"host": [
+												"ordmnu.herokuapp.com"
+											],
+											"path": [
+												"api",
+												"v1",
+												"partners",
+												"categories",
+												"63090adff36a793a0c4eca5b"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "X-DNS-Prefetch-Control",
+											"value": "off"
+										},
+										{
+											"key": "X-Frame-Options",
+											"value": "SAMEORIGIN"
+										},
+										{
+											"key": "Strict-Transport-Security",
+											"value": "max-age=15552000; includeSubDomains"
+										},
+										{
+											"key": "X-Download-Options",
+											"value": "noopen"
+										},
+										{
+											"key": "X-Content-Type-Options",
+											"value": "nosniff"
+										},
+										{
+											"key": "X-XSS-Protection",
+											"value": "1; mode=block"
+										},
+										{
+											"key": "Access-Control-Allow-Origin",
+											"value": "*"
+										},
+										{
+											"key": "X-RateLimit-Limit",
+											"value": "1000"
+										},
+										{
+											"key": "X-RateLimit-Remaining",
+											"value": "998"
+										},
+										{
+											"key": "Date",
+											"value": "Fri, 26 Aug 2022 18:05:09 GMT"
+										},
+										{
+											"key": "X-RateLimit-Reset",
+											"value": "1661540692"
+										},
+										{
+											"key": "Content-Type",
+											"value": "application/json; charset=utf-8"
+										},
+										{
+											"key": "Content-Length",
+											"value": "411"
+										},
+										{
+											"key": "ETag",
+											"value": "W/\"19b-/NOzj1k7TmgmC4lN0RB0/SeI0wY\""
+										},
+										{
+											"key": "Vary",
+											"value": "Accept-Encoding"
+										},
+										{
+											"key": "Connection",
+											"value": "keep-alive"
+										},
+										{
+											"key": "Keep-Alive",
+											"value": "timeout=5"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"status\": \"success\",\n    \"data\": {\n        \"_id\": \"63090adff36a793a0c4eca5b\",\n        \"partnerId\": \"60b239f4454fc80015592fd0\",\n        \"name\": \"Fast Food - Update\",\n        \"image\": \"https://cdn0.iconfinder.com/data/icons/metaphoricon-essentials-vol-3/128/food-basket-shopping_basket-groceries-products-grocery-512.png\",\n        \"description\": \"Updated description will be here!\",\n        \"createdAt\": \"2022-08-26T18:03:11.992Z\",\n        \"updatedAt\": \"2022-08-26T18:03:41.447Z\",\n        \"__v\": 0\n    }\n}"
+								}
+							]
+						},
+						{
+							"name": "Delete Category",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"let response = pm.response.json();",
+											"pm.environment.set('authtoken',response.accessToken);"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "https://ordmnu.herokuapp.com/api/v1/partners/categories/63090adff36a793a0c4eca5b",
+									"protocol": "https",
+									"host": [
+										"ordmnu.herokuapp.com"
+									],
+									"path": [
+										"api",
+										"v1",
+										"partners",
+										"categories",
+										"63090adff36a793a0c4eca5b"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Products",
+					"item": [
+						{
+							"name": "Get All Products",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"let response = pm.response.json();",
+											"pm.environment.set('authtoken',response.accessToken);"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "https://ordmnu.herokuapp.com/api/v1/partners/products",
+									"protocol": "https",
+									"host": [
+										"ordmnu.herokuapp.com"
+									],
+									"path": [
+										"api",
+										"v1",
+										"partners",
+										"products"
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "Get All Products",
+									"originalRequest": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "https://ordmnu.herokuapp.com/api/v1/partners/products",
+											"protocol": "https",
+											"host": [
+												"ordmnu.herokuapp.com"
+											],
+											"path": [
+												"api",
+												"v1",
+												"partners",
+												"products"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "X-DNS-Prefetch-Control",
+											"value": "off"
+										},
+										{
+											"key": "X-Frame-Options",
+											"value": "SAMEORIGIN"
+										},
+										{
+											"key": "Strict-Transport-Security",
+											"value": "max-age=15552000; includeSubDomains"
+										},
+										{
+											"key": "X-Download-Options",
+											"value": "noopen"
+										},
+										{
+											"key": "X-Content-Type-Options",
+											"value": "nosniff"
+										},
+										{
+											"key": "X-XSS-Protection",
+											"value": "1; mode=block"
+										},
+										{
+											"key": "Access-Control-Allow-Origin",
+											"value": "*"
+										},
+										{
+											"key": "X-RateLimit-Limit",
+											"value": "1000"
+										},
+										{
+											"key": "X-RateLimit-Remaining",
+											"value": "998"
+										},
+										{
+											"key": "Date",
+											"value": "Fri, 26 Aug 2022 18:16:53 GMT"
+										},
+										{
+											"key": "X-RateLimit-Reset",
+											"value": "1661541389"
+										},
+										{
+											"key": "Content-Type",
+											"value": "application/json; charset=utf-8"
+										},
+										{
+											"key": "ETag",
+											"value": "W/\"74b-YZL8ipPVXaZtZrK8+quEqZ/+75s\""
+										},
+										{
+											"key": "Vary",
+											"value": "Accept-Encoding"
+										},
+										{
+											"key": "Content-Encoding",
+											"value": "gzip"
+										},
+										{
+											"key": "Connection",
+											"value": "keep-alive"
+										},
+										{
+											"key": "Keep-Alive",
+											"value": "timeout=5"
+										},
+										{
+											"key": "Transfer-Encoding",
+											"value": "chunked"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"status\": \"success\",\n    \"data\": [\n        {\n            \"orderLimit\": {\n                \"minQuantity\": 1,\n                \"maxQuantity\": 10\n            },\n            \"_id\": \"63090db9ee37015feff564d4\",\n            \"name\": \"Fast Food 2\",\n            \"partnerId\": \"60b239f4454fc80015592fd0\",\n            \"categoriesId\": [],\n            \"slug\": \"fast-food-2- 3784\",\n            \"description\": \"description will be here!\",\n            \"variants\": [\n                {\n                    \"unit\": \"1 Pic\",\n                    \"productMRP\": 1,\n                    \"discount\": 0,\n                    \"salePrice\": 1,\n                    \"partnerPrice\": 0,\n                    \"stock\": 1,\n                    \"_id\": \"63090db9ee37015feff564d5\"\n                }\n            ],\n            \"isOutOfStock\": false,\n            \"isVegan\": false,\n            \"isNonVegan\": false,\n            \"isVerified\": false,\n            \"isBlocked\": false,\n            \"tags\": [],\n            \"isListingOn\": true,\n            \"isReturnable\": true,\n            \"isCancelable\": true,\n            \"isActive\": true,\n            \"createdAt\": \"2022-08-26T18:15:21.695Z\",\n            \"updatedAt\": \"2022-08-26T18:15:21.695Z\"\n        },\n        {\n            \"orderLimit\": {\n                \"minQuantity\": 1,\n                \"maxQuantity\": 10\n            },\n            \"_id\": \"63090d9bbd6aa02d3c994ba0\",\n            \"name\": \"Fast Food 2\",\n            \"partnerId\": \"60b239f4454fc80015592fd0\",\n            \"categoriesId\": [],\n            \"slug\": \"fast-food-2\",\n            \"description\": \"description will be here!\",\n            \"variants\": [\n                {\n                    \"unit\": \"1 Pic\",\n                    \"productMRP\": 1,\n                    \"discount\": 0,\n                    \"salePrice\": 1,\n                    \"partnerPrice\": 0,\n                    \"stock\": 1,\n                    \"_id\": \"63090d9bbd6aa02d3c994ba1\"\n                }\n            ],\n            \"isOutOfStock\": false,\n            \"isVegan\": false,\n            \"isNonVegan\": false,\n            \"isVerified\": false,\n            \"isBlocked\": false,\n            \"tags\": [],\n            \"isListingOn\": true,\n            \"isReturnable\": true,\n            \"isCancelable\": true,\n            \"isActive\": true,\n            \"createdAt\": \"2022-08-26T18:14:51.040Z\",\n            \"updatedAt\": \"2022-08-26T18:14:51.040Z\"\n        },\n        {\n            \"orderLimit\": {\n                \"minQuantity\": 1,\n                \"maxQuantity\": 10\n            },\n            \"_id\": \"63090e0bbfbc690ab52ebf85\",\n            \"name\": \"Product 2\",\n            \"partnerId\": \"60b239f4454fc80015592fd0\",\n            \"categoriesId\": [],\n            \"slug\": \"product-2\",\n            \"description\": \"description will be here!\",\n            \"variants\": [\n                {\n                    \"unit\": \"1 Pic\",\n                    \"productMRP\": 1,\n                    \"discount\": 0,\n                    \"salePrice\": 1,\n                    \"partnerPrice\": 0,\n                    \"stock\": 1,\n                    \"_id\": \"63090e0bbfbc690ab52ebf86\"\n                }\n            ],\n            \"isOutOfStock\": false,\n            \"isVegan\": false,\n            \"isNonVegan\": false,\n            \"isVerified\": false,\n            \"isBlocked\": false,\n            \"tags\": [],\n            \"isListingOn\": true,\n            \"isReturnable\": true,\n            \"isCancelable\": true,\n            \"isActive\": true,\n            \"createdAt\": \"2022-08-26T18:16:43.115Z\",\n            \"updatedAt\": \"2022-08-26T18:16:43.115Z\"\n        }\n    ]\n}"
+								}
+							]
+						},
+						{
+							"name": "Create Product",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"let response = pm.response.json();",
+											"pm.environment.set('authtoken',response.accessToken);"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"name\": \"Fast Food 2\",\n    \"description\": \"description will be here!\",\n    \"colSize\": 6\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "https://ordmnu.herokuapp.com/api/v1/partners/products",
+									"protocol": "https",
+									"host": [
+										"ordmnu.herokuapp.com"
+									],
+									"path": [
+										"api",
+										"v1",
+										"partners",
+										"products"
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "Create Product",
+									"originalRequest": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"name\": \"Product 2\",\n    \"description\": \"description will be here!\",\n    \"colSize\": 6\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "https://ordmnu.herokuapp.com/api/v1/partners/products",
+											"protocol": "https",
+											"host": [
+												"ordmnu.herokuapp.com"
+											],
+											"path": [
+												"api",
+												"v1",
+												"partners",
+												"products"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "X-DNS-Prefetch-Control",
+											"value": "off"
+										},
+										{
+											"key": "X-Frame-Options",
+											"value": "SAMEORIGIN"
+										},
+										{
+											"key": "Strict-Transport-Security",
+											"value": "max-age=15552000; includeSubDomains"
+										},
+										{
+											"key": "X-Download-Options",
+											"value": "noopen"
+										},
+										{
+											"key": "X-Content-Type-Options",
+											"value": "nosniff"
+										},
+										{
+											"key": "X-XSS-Protection",
+											"value": "1; mode=block"
+										},
+										{
+											"key": "Access-Control-Allow-Origin",
+											"value": "*"
+										},
+										{
+											"key": "X-RateLimit-Limit",
+											"value": "1000"
+										},
+										{
+											"key": "X-RateLimit-Remaining",
+											"value": "999"
+										},
+										{
+											"key": "Date",
+											"value": "Fri, 26 Aug 2022 18:16:42 GMT"
+										},
+										{
+											"key": "X-RateLimit-Reset",
+											"value": "1661541389"
+										},
+										{
+											"key": "Content-Type",
+											"value": "application/json; charset=utf-8"
+										},
+										{
+											"key": "Content-Length",
+											"value": "643"
+										},
+										{
+											"key": "ETag",
+											"value": "W/\"283-yJ+becPMvE+wn3OO3vTNKQxHzhI\""
+										},
+										{
+											"key": "Vary",
+											"value": "Accept-Encoding"
+										},
+										{
+											"key": "Connection",
+											"value": "keep-alive"
+										},
+										{
+											"key": "Keep-Alive",
+											"value": "timeout=5"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"status\": \"success\",\n    \"data\": {\n        \"name\": \"Product 2\",\n        \"partnerId\": \"60b239f4454fc80015592fd0\",\n        \"categoriesId\": [],\n        \"slug\": \"product-2\",\n        \"description\": \"description will be here!\",\n        \"variants\": [\n            {\n                \"unit\": \"1 Pic\",\n                \"productMRP\": 1,\n                \"discount\": 0,\n                \"salePrice\": 1,\n                \"partnerPrice\": 0,\n                \"stock\": 1,\n                \"_id\": \"63090e0bbfbc690ab52ebf86\"\n            }\n        ],\n        \"isOutOfStock\": false,\n        \"isVegan\": false,\n        \"isNonVegan\": false,\n        \"isVerified\": false,\n        \"isBlocked\": false,\n        \"tags\": [],\n        \"orderLimit\": {\n            \"minQuantity\": 1,\n            \"maxQuantity\": 10\n        },\n        \"isListingOn\": true,\n        \"isReturnable\": true,\n        \"isCancelable\": true,\n        \"isActive\": true,\n        \"_id\": \"63090e0bbfbc690ab52ebf85\",\n        \"createdAt\": \"2022-08-26T18:16:43.115Z\",\n        \"updatedAt\": \"2022-08-26T18:16:43.115Z\",\n        \"__v\": 0\n    }\n}"
+								}
+							]
+						},
+						{
+							"name": "Update Product",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"let response = pm.response.json();",
+											"pm.environment.set('authtoken',response.accessToken);"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "PATCH",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"name\": \"Product Update\",\n    \"description\": \"Updated description will be here!\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "https://ordmnu.herokuapp.com/api/v1/partners/products/63090e0bbfbc690ab52ebf85",
+									"protocol": "https",
+									"host": [
+										"ordmnu.herokuapp.com"
+									],
+									"path": [
+										"api",
+										"v1",
+										"partners",
+										"products",
+										"63090e0bbfbc690ab52ebf85"
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "Update Product",
+									"originalRequest": {
+										"method": "PATCH",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"name\": \"Product Update\",\n    \"description\": \"Updated description will be here!\"\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "https://ordmnu.herokuapp.com/api/v1/partners/products/63090e0bbfbc690ab52ebf85",
+											"protocol": "https",
+											"host": [
+												"ordmnu.herokuapp.com"
+											],
+											"path": [
+												"api",
+												"v1",
+												"partners",
+												"products",
+												"63090e0bbfbc690ab52ebf85"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "X-DNS-Prefetch-Control",
+											"value": "off"
+										},
+										{
+											"key": "X-Frame-Options",
+											"value": "SAMEORIGIN"
+										},
+										{
+											"key": "Strict-Transport-Security",
+											"value": "max-age=15552000; includeSubDomains"
+										},
+										{
+											"key": "X-Download-Options",
+											"value": "noopen"
+										},
+										{
+											"key": "X-Content-Type-Options",
+											"value": "nosniff"
+										},
+										{
+											"key": "X-XSS-Protection",
+											"value": "1; mode=block"
+										},
+										{
+											"key": "Access-Control-Allow-Origin",
+											"value": "*"
+										},
+										{
+											"key": "X-RateLimit-Limit",
+											"value": "1000"
+										},
+										{
+											"key": "X-RateLimit-Remaining",
+											"value": "999"
+										},
+										{
+											"key": "Date",
+											"value": "Fri, 26 Aug 2022 18:20:14 GMT"
+										},
+										{
+											"key": "X-RateLimit-Reset",
+											"value": "1661541612"
+										},
+										{
+											"key": "Content-Type",
+											"value": "application/json; charset=utf-8"
+										},
+										{
+											"key": "Content-Length",
+											"value": "675"
+										},
+										{
+											"key": "ETag",
+											"value": "W/\"2a3-nKLPDFlLba5FIthFFV8X7Avtn4A\""
+										},
+										{
+											"key": "Vary",
+											"value": "Accept-Encoding"
+										},
+										{
+											"key": "Connection",
+											"value": "keep-alive"
+										},
+										{
+											"key": "Keep-Alive",
+											"value": "timeout=5"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"status\": \"success\",\n    \"data\": {\n        \"orderLimit\": {\n            \"minQuantity\": 1,\n            \"maxQuantity\": 10\n        },\n        \"_id\": \"63090e0bbfbc690ab52ebf85\",\n        \"name\": \"Product Update\",\n        \"partnerId\": \"60b239f4454fc80015592fd0\",\n        \"categoriesId\": [],\n        \"slug\": \"product-update-1661538011701\",\n        \"description\": \"Updated description will be here!\",\n        \"variants\": [\n            {\n                \"unit\": \"1 Pic\",\n                \"productMRP\": 1,\n                \"discount\": 0,\n                \"salePrice\": 1,\n                \"partnerPrice\": 0,\n                \"stock\": 1,\n                \"_id\": \"63090e0bbfbc690ab52ebf86\"\n            }\n        ],\n        \"isOutOfStock\": false,\n        \"isVegan\": false,\n        \"isNonVegan\": false,\n        \"isVerified\": false,\n        \"isBlocked\": false,\n        \"tags\": [],\n        \"isListingOn\": true,\n        \"isReturnable\": true,\n        \"isCancelable\": true,\n        \"isActive\": true,\n        \"createdAt\": \"2022-08-26T18:16:43.115Z\",\n        \"updatedAt\": \"2022-08-26T18:20:14.925Z\",\n        \"__v\": 0\n    }\n}"
+								}
+							]
+						},
+						{
+							"name": "Get Product",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"let response = pm.response.json();",
+											"pm.environment.set('authtoken',response.accessToken);"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "https://ordmnu.herokuapp.com/api/v1/partners/products/63090e0bbfbc690ab52ebf85",
+									"protocol": "https",
+									"host": [
+										"ordmnu.herokuapp.com"
+									],
+									"path": [
+										"api",
+										"v1",
+										"partners",
+										"products",
+										"63090e0bbfbc690ab52ebf85"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Delete Product",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"let response = pm.response.json();",
+											"pm.environment.set('authtoken',response.accessToken);"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "https://ordmnu.herokuapp.com/api/v1/partners/products/62eee37ffac05b62cc40ba08",
+									"protocol": "https",
+									"host": [
+										"ordmnu.herokuapp.com"
+									],
+									"path": [
+										"api",
+										"v1",
+										"partners",
+										"products",
+										"62eee37ffac05b62cc40ba08"
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "Delete Category",
+									"originalRequest": {
+										"method": "DELETE",
+										"header": [],
+										"url": {
+											"raw": "https://ordmnu.herokuapp.com/api/v1/partners/categories/62eee37ffac05b62cc40ba08",
+											"protocol": "https",
+											"host": [
+												"ordmnu.herokuapp.com"
+											],
+											"path": [
+												"api",
+												"v1",
+												"partners",
+												"categories",
+												"62eee37ffac05b62cc40ba08"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "X-DNS-Prefetch-Control",
+											"value": "off"
+										},
+										{
+											"key": "X-Frame-Options",
+											"value": "SAMEORIGIN"
+										},
+										{
+											"key": "Strict-Transport-Security",
+											"value": "max-age=15552000; includeSubDomains"
+										},
+										{
+											"key": "X-Download-Options",
+											"value": "noopen"
+										},
+										{
+											"key": "X-Content-Type-Options",
+											"value": "nosniff"
+										},
+										{
+											"key": "X-XSS-Protection",
+											"value": "1; mode=block"
+										},
+										{
+											"key": "Access-Control-Allow-Origin",
+											"value": "*"
+										},
+										{
+											"key": "X-RateLimit-Limit",
+											"value": "1000"
+										},
+										{
+											"key": "X-RateLimit-Remaining",
+											"value": "989"
+										},
+										{
+											"key": "Date",
+											"value": "Sat, 06 Aug 2022 21:56:38 GMT"
+										},
+										{
+											"key": "X-RateLimit-Reset",
+											"value": "1659825864"
+										},
+										{
+											"key": "Content-Type",
+											"value": "application/json; charset=utf-8"
+										},
+										{
+											"key": "Content-Length",
+											"value": "345"
+										},
+										{
+											"key": "ETag",
+											"value": "W/\"159-UpjYw9wcVo0zX/2PZYZCt23/4Gc\""
+										},
+										{
+											"key": "Vary",
+											"value": "Accept-Encoding"
+										},
+										{
+											"key": "Connection",
+											"value": "keep-alive"
+										},
+										{
+											"key": "Keep-Alive",
+											"value": "timeout=5"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"status\": \"success\",\n    \"data\": {\n        \"_id\": \"62eee37ffac05b62cc40ba08\",\n        \"partnerId\": \"62eedb2bccba9306d79c93ea\",\n        \"title\": \"Fast Food 2\",\n        \"slug\": \"fast-food-2-45868\",\n        \"colSize\": 6,\n        \"positionNumber\": 1,\n        \"description\": \"description will be here!\",\n        \"isListingOn\": true,\n        \"isActive\": false,\n        \"createdAt\": \"2022-08-06T21:56:15.903Z\",\n        \"updatedAt\": \"2022-08-06T21:56:37.159Z\",\n        \"__v\": 0\n    }\n}"
+								}
+							]
+						}
+					]
+				},
+				{
+					"name": "Onboarding",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"let response = pm.response.json();",
+									"pm.environment.set('authtoken',response.accessToken);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"firstName\": \"Shekhar\",\n    \"lastName\": \"Patel\",\n    \"phone\": \"7879554452\",\n    \"email\": \"shekhar53@gmail.com\",\n    \"name\": \"5 states Restaurant By Madras Hote3\",\n    \"description\": \"5 states Restaurant\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://ordmnu.herokuapp.com/api/v1/partners/onboarding",
+							"protocol": "https",
+							"host": [
+								"ordmnu.herokuapp.com"
+							],
+							"path": [
+								"api",
+								"v1",
+								"partners",
+								"onboarding"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Onboarding",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"firstName\": \"Shekhar\",\n    \"lastName\": \"Patel\",\n    \"phone\": \"7879554422\",\n    \"email\": \"shekhar22@gmail.com\",\n    \"name\": \"5 states Restaurant By Madras Hote 22\",\n    \"description\": \"5 states Restaurant\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "https://ordmnu.herokuapp.com/api/v1/partners/onboarding",
+									"protocol": "https",
+									"host": [
+										"ordmnu.herokuapp.com"
+									],
+									"path": [
+										"api",
+										"v1",
+										"partners",
+										"onboarding"
+									]
+								}
+							},
+							"status": "Created",
+							"code": 201,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-DNS-Prefetch-Control",
+									"value": "off"
+								},
+								{
+									"key": "X-Frame-Options",
+									"value": "SAMEORIGIN"
+								},
+								{
+									"key": "Strict-Transport-Security",
+									"value": "max-age=15552000; includeSubDomains"
+								},
+								{
+									"key": "X-Download-Options",
+									"value": "noopen"
+								},
+								{
+									"key": "X-Content-Type-Options",
+									"value": "nosniff"
+								},
+								{
+									"key": "X-XSS-Protection",
+									"value": "1; mode=block"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "X-RateLimit-Limit",
+									"value": "1000"
+								},
+								{
+									"key": "X-RateLimit-Remaining",
+									"value": "994"
+								},
+								{
+									"key": "Date",
+									"value": "Fri, 26 Aug 2022 18:52:51 GMT"
+								},
+								{
+									"key": "X-RateLimit-Reset",
+									"value": "1661543479"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "285"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"11d-Avpf5Ce0PjVV4pYbnd8kjTUwqcg\""
+								},
+								{
+									"key": "Vary",
+									"value": "Accept-Encoding"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"status\": \"success\",\n    \"data\": {\n        \"name\": \"5 states Restaurant By Madras Hote 22\",\n        \"slug\": \"5-states-restaurant-by-madras-hote-22-572317\",\n        \"description\": \"5 states Restaurant\",\n        \"_id\": \"63091683915e2f88e8a755a2\",\n        \"createdAt\": \"2022-08-26T18:52:51.193Z\",\n        \"updatedAt\": \"2022-08-26T18:52:51.193Z\",\n        \"__v\": 0\n    }\n}"
+						}
+					]
+				},
+				{
+					"name": "Account",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"let response = pm.response.json();",
+									"pm.environment.set('authtoken',response.accessToken);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://ordmnu.herokuapp.com/api/v1/partners/account",
+							"protocol": "https",
+							"host": [
+								"ordmnu.herokuapp.com"
+							],
+							"path": [
+								"api",
+								"v1",
+								"partners",
+								"account"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "success",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "https://ordmnu.herokuapp.com/api/v1/partners/account",
+									"protocol": "https",
+									"host": [
+										"ordmnu.herokuapp.com"
+									],
+									"path": [
+										"api",
+										"v1",
+										"partners",
+										"account"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-DNS-Prefetch-Control",
+									"value": "off"
+								},
+								{
+									"key": "X-Frame-Options",
+									"value": "SAMEORIGIN"
+								},
+								{
+									"key": "Strict-Transport-Security",
+									"value": "max-age=15552000; includeSubDomains"
+								},
+								{
+									"key": "X-Download-Options",
+									"value": "noopen"
+								},
+								{
+									"key": "X-Content-Type-Options",
+									"value": "nosniff"
+								},
+								{
+									"key": "X-XSS-Protection",
+									"value": "1; mode=block"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "X-RateLimit-Limit",
+									"value": "1000"
+								},
+								{
+									"key": "X-RateLimit-Remaining",
+									"value": "992"
+								},
+								{
+									"key": "Date",
+									"value": "Sat, 06 Aug 2022 21:28:56 GMT"
+								},
+								{
+									"key": "X-RateLimit-Reset",
+									"value": "1659824755"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"42e-soHYaJwZaaMmOzo4gIzov6cSc9c\""
+								},
+								{
+									"key": "Vary",
+									"value": "Accept-Encoding"
+								},
+								{
+									"key": "Content-Encoding",
+									"value": "gzip"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"status\": \"success\",\n    \"data\": {\n        \"businessDetails\": {\n            \"businessName\": \"5 states Restaurant By Madras Hotel\",\n            \"tagline\": \"5 states Restaurant\"\n        },\n        \"rating\": {\n            \"total\": 0,\n            \"avg\": 5\n        },\n        \"paymentTypes\": {\n            \"isCodReceives\": false,\n            \"isUpiReceives\": true,\n            \"isPrepaidReceives\": false\n        },\n        \"_id\": \"62eedb2bccba9306d79c93ea\",\n        \"userName\": \"5states Restaurant By Madras Hotel327937\",\n        \"slug\": \"5-states-restaurant-by-madras-hotel-260066\",\n        \"managerId\": \"62eedb2bccba9306d79c93e7\",\n        \"ownerDetails\": {\n            \"firstName\": \"Shekhar\",\n            \"lastName\": \"Patel\",\n            \"profileImage\": \"/assets/images/user.svg\",\n            \"gender\": \"Other\",\n            \"citizenship\": \"Indian\",\n            \"phone\": \"7879553209\",\n            \"email\": \"shekhar@gmail.com\",\n            \"maritalStatus\": \"unknown\",\n            \"_id\": \"62eedb2bccba9306d79c93eb\"\n        },\n        \"keywords\": [],\n        \"images\": [],\n        \"minimumCartAmount\": 250,\n        \"totalViews\": 0,\n        \"responseTime\": \"6h\",\n        \"packingCharges\": 0,\n        \"serviceCharges\": 0,\n        \"visibilityRadius\": 50,\n        \"distance\": \"\",\n        \"status\": \"pending\",\n        \"role\": \"partner\",\n        \"profileScore\": 0,\n        \"commissionPercent\": 0,\n        \"isVerified\": false,\n        \"isTakingOrders\": false,\n        \"isBlocked\": false,\n        \"isActive\": true,\n        \"createdAt\": \"2022-08-06T21:20:43.322Z\",\n        \"updatedAt\": \"2022-08-06T21:20:43.322Z\",\n        \"__v\": 0\n    }\n}"
+						}
+					]
+				},
+				{
+					"name": "Update",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"let response = pm.response.json();",
+									"pm.environment.set('authtoken',response.accessToken);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"businessDetails\": {\n        \"businessName\": \"Madras Hotel\",\n        \"tagline\": \"restaurant\"\n    },\n    \"description\": \"description Will be here!\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://ordmnu.herokuapp.com/api/v1/partners/account",
+							"protocol": "https",
+							"host": [
+								"ordmnu.herokuapp.com"
+							],
+							"path": [
+								"api",
+								"v1",
+								"partners",
+								"account"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
