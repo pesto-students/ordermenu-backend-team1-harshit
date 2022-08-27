@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-const smstemplateSchema = new mongoose.Schema(
+const smsTemplateSchema = new mongoose.Schema(
   {
     templateName: {
       type: String,
@@ -33,10 +33,10 @@ const smstemplateSchema = new mongoose.Schema(
   }
 );
 
-smstemplateSchema.pre(/^find/, function(next) {
+smsTemplateSchema.pre(/^find/, function(next) {
   next();
 });
 
-const Smstemplate = mongoose.model('Smstemplate', smstemplateSchema);
+const SmsTemplate = mongoose.model('SmsTemplate', smsTemplateSchema);
 
-module.exports = Smstemplate;
+module.exports = SmsTemplate;

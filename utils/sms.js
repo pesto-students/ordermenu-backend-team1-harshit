@@ -1,5 +1,5 @@
 const https = require("https");
-const SmsTemplate = require("../models/smsTemplateModel");
+const SmsTemplate = require("../models/templateSmsModel");
 
 module.exports = class SMS {
   constructor(phone) {
