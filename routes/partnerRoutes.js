@@ -13,7 +13,7 @@ router.use(authController.restrictTo("partner"));
 
 // Account ***
 router
-  .route("/")
+  .route("/partners")
   .get(partnerController.getAccount)
   .post(partnerController.createPartner)
   .patch(partnerController.updateAccount)
