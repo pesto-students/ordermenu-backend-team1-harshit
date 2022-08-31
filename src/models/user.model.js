@@ -1,8 +1,27 @@
 const mongoose = require('mongoose');
 const constant = require('../config/constants');
 
+const OtpSchema = new mongoose.Schema({
+    code: {
+        type: Number,
+    },
+    expireAt: {
+        type: Date,
+        default: +new Date() + 30000
+    },
+    isUsed: {
+        type: Boolean,
+        default: false
+    }
+})
+
+
 const UserSchema = new mongoose.Schema({
-    name: {
+    firstName: {
+        type: String,
+        required: true
+    },
+    lastName: {
         type: String,
         required: true
     },
@@ -15,7 +34,8 @@ const UserSchema = new mongoose.Schema({
         required: true
     },
     otp: {
-        type: Number
+        type: OtpSchema,
+        select: false,
     },
     role: {
         type: String,
@@ -24,10 +44,8 @@ const UserSchema = new mongoose.Schema({
     },
     orders: {
         type: [mongoose.SchemaTypes.ObjectId],
-        default: undefined
+        default: []
     }
 });
 
-const User = mongoose.model('User', UserSchema);
-
-module.export = User;
+module.exports = mongoose.model('User', UserSchema);

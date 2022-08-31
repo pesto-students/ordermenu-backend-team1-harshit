@@ -12,7 +12,7 @@ const CategorySchema = new mongoose.Schema({
   }
 })
 
-const MenuItemOptions = new mongoose.Schema({
+const ProductOptionsSchema = new mongoose.Schema({
   name: {
     type: String,
     required: true,
@@ -23,7 +23,7 @@ const MenuItemOptions = new mongoose.Schema({
   },
 })
 
-const MenuItemSchema = new mongoose.Schema({
+const ProductSchema = new mongoose.Schema({
   name: {
     type: String,
     required: true,
@@ -41,12 +41,12 @@ const MenuItemSchema = new mongoose.Schema({
     required: true
   },
   tags: [String],
-  size: {
-    type: [MenuItemOptions],
+  sizes: {
+    type: [ProductOptionsSchema],
     required: true
   },
   extra: {
-    type: [MenuItemOptions],
+    type: [ProductOptionsSchema],
     required: true
   }
 })
@@ -63,12 +63,19 @@ const TableSchema = new mongoose.Schema({
   },
   isBooked: {
     type: Boolean,
-    required: true,
+    default: false,
   }
 })
 
-const RestaurantSchema = new mongoose.Schema({
+const PartnerSchema = new mongoose.Schema({
   name: {
+    type: String,
+  },
+  slug: {
+    type: String,
+    unique: true,
+  },
+  tagline: {
     type: String,
   },
   description: {
@@ -90,13 +97,11 @@ const RestaurantSchema = new mongoose.Schema({
     type: [CategorySchema]
   },
   menu: {
-    type: [MenuItemSchema]
+    type: [ProductSchema]
   },
   tables: {
     type: [TableSchema]
   },
 }, { timestamps: true });
 
-const Restaurant = mongoose.model('Restaurant', RestaurantSchema)
-
-module.export = Restaurant;
+module.exports = mongoose.model('Partner', PartnerSchema)

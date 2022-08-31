@@ -1,5 +1,4 @@
-const Restaurant = require('./restaurant.model')
-const Order = require('./order.model')
-const User = require('./user.model')
-
-module.export = { Restaurant, Order, User };
+module.exports.Partner = require('./partner.model')
+module.exports.Order = require('./order.model')
+module.exports.User = require('./user.model')
+module.exports.Token = require('./token.model')

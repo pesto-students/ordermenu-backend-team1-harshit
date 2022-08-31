@@ -7,6 +7,20 @@ module.exports = {
     },
     userTypes: {
         USER: "USER",
-        ADMIN: "ADMIN"
+        OWNER: "OWNER",
+        ADMIN: "ADMIN",
+    },
+    tokenTypes: {
+        ACCESS: 'access',
+        REFRESH: 'refresh',
+    },
+    otp: {
+        OTP_LENGTH: 6,
+        OTP_CONFIG: {
+            digits: true,
+            lowerCaseAlphabets: false,
+            upperCaseAlphabets: false,
+            specialChars: false,
+        }
     }
 }
