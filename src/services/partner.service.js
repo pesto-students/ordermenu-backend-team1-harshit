@@ -20,6 +20,13 @@ const getPartnerBySlug = async (slug) => {
   return partner
 };
 
+const getPartnerById = async (id) => {
+  const partner = Partner.findOne({ _id: id })
+  if (!partner)
+    throw new ApiError(httpStatus.NotFound, "Partner not found!")
+  return partner
+};
+
 const getPartnerByOwnerId = async (ownerId) => {
   const partner = await Partner.findOne({ ownerId })
 
@@ -58,5 +65,6 @@ module.exports = {
   getAllPartners,
   updatePartnerById,
   deletePartnerById,
-  getPartnerByOwnerId
+  getPartnerByOwnerId,
+  getPartnerById
 }

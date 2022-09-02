@@ -1,4 +1,5 @@
 const httpStatus = require('http-status')
+const fs = require('fs')
 const { ApiError } = require('../utils/')
 const partnerService = require('./partner.service')
 const qrService = require('./qr.service')
@@ -18,6 +19,10 @@ const createTable = async (ownerId, tableNumber) => {
   partner.tables.push({
     number: tableNumber,
     qrCode: uploadedFile.Location
+  })
+
+  fs.unlink(file.path, (err, data) => {
+    console.log(err, data)
   })
 
   return partner.save()
