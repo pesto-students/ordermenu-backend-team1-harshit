@@ -5,7 +5,6 @@ const { ApiError, generateSlug } = require('../utils/')
 
 const createPartnerAccount = async (partner) => {
   let slug = generateSlug(partner.name);
-  console.log("Slug -> ", slug)
 
   if (await Partner.findOne({ slug })) {
     slug = generateSlug(partner.name + "-" + randomUUID())
@@ -44,7 +43,6 @@ const updatePartnerById = async (partnerId, updateBody) => {
   const partner = await getPartnerById(partnerId);
 
   Object.assign(partner, updateBody);
-  console.log("updated partner =========> ", partner, updateBody)
 
   return await partner.save();
 };

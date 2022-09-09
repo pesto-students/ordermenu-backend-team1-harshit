@@ -15,7 +15,6 @@ const signin = async (phone) => {
 
   user.otp = await otpService.generateOTP();
 
-  console.log("otp -> ", user.otp);
   user.save()
   return { _id: user._id, phone: user.phone }
 };
@@ -33,7 +32,6 @@ const signinAdmin = async (phone) => {
 
   user.otp = await otpService.generateOTP();
 
-  console.log("otp -> ", user.otp);
   user.save()
   return { _id: user._id, phone: user.phone }
 };

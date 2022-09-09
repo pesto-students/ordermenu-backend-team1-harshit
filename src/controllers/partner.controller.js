@@ -15,7 +15,6 @@ const getPartnerBySlug = catchAsync(async (req, res) => {
 });
 
 const getPartnerByOwnerId = catchAsync(async (req, res) => {
-  console.log("Current User => ", req.user)
   const partner = await partnerService.getPartnerByOwnerId(req.user);
   res.send(partner)
 });

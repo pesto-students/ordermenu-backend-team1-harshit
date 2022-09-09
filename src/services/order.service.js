@@ -76,8 +76,6 @@ const getAllOrdersOfPartner = async (partnerId) => {
 const getOrderStats = async (partnerId) => {
   const orders = await Order.find({ partnerId })
 
-  console.log("Orders : ", orders)
-
   return {
     totalOrders: orders.length,
     pendingOrders: orders.filter((order) => order.status === orderStatusOptions.PENDING).length,

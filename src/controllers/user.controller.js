@@ -13,7 +13,6 @@ const getUserById = catchAsync(async (req, res) => {
 });
 
 const getCurrentUserDetails = catchAsync(async (req, res) => {
-  console.log("user => ", req.user)
   const user = await userService.getUserById(req.user);
   res.send(user)
 });
