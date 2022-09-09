@@ -11,7 +11,7 @@ const createTable = async (ownerId, tableNumber) => {
   if (partner.tables.find(table => +table.number === +tableNumber))
     throw new ApiError(httpStatus.BAD_REQUEST, `Table with table number '${tableNumber}' already exists!`)
 
-  const url = `http://localhost:3000/${partner.slug}/${tableNumber}`
+  const url = `http://localhost:3000/${partner.slug}?table=${tableNumber}`
 
   const file = await qrService.generateQR(url);
   const uploadedFile = await uploadService.uploadFile(file);
@@ -24,9 +24,21 @@ const createTable = async (ownerId, tableNumber) => {
   fs.unlink(file.path, (err, data) => {
     console.log(err, data)
   })
+  partner.save()
 
-  return partner.save()
+  return partner.tables[partner.tables.length - 1]
 };
+
+const getAvailableTable = async (partnerSlug) => {
+  const partner = await partnerService.getPartnerBySlug(partnerSlug);
+
+  const availableTable = partner?.tables?.find(table => !table?.isBooked)
+
+  if (!availableTable)
+    throw new ApiError(httpStatus.NOT_FOUND, "No table available!")
+
+  return availableTable
+}
 
 const getTableById = async (ownerId, tableId) => {
   const partner = await partnerService.getPartnerByOwnerId(ownerId)
@@ -48,12 +60,13 @@ const deleteTableById = async (ownerId, tableId) => {
   if (index < 0)
     throw new ApiError(httpStatus.NOT_FOUND, "Table not found!")
   partner.tables.id(tableId).remove()
-  return partner.save()
+  return tableId
 };
 
 module.exports = {
   createTable,
   getTableById,
   getAllTables,
+  getAvailableTable,
   deleteTableById
 }

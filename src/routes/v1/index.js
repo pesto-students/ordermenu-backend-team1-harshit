@@ -9,5 +9,6 @@ router.use(require('./partner.route'))
 router.use(require('./product.route'))
 router.use(require('./table.route'))
 router.use(require('./user.route'))
+router.use(require('./upload.route'))
 
 module.exports = router;

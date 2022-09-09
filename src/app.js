@@ -12,8 +12,6 @@ const { jwtStrategy } = require('./config/passport');
 const { errorConverter, errorHandler } = require('./middlewares/error');
 const ApiError = require('./utils/ApiError');
 
-const { User, Order, Restaurant } = require('./models/')
-
 const app = express();
 
 if (config.env !== 'test') {

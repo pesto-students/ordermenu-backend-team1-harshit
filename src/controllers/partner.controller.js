@@ -14,6 +14,12 @@ const getPartnerBySlug = catchAsync(async (req, res) => {
   res.send(partner)
 });
 
+const getPartnerByOwnerId = catchAsync(async (req, res) => {
+  console.log("Current User => ", req.user)
+  const partner = await partnerService.getPartnerByOwnerId(req.user);
+  res.send(partner)
+});
+
 const getAllPartners = catchAsync(async (req, res) => {
   const partners = await partnerService.getAllPartners();
   res.send(partners)
@@ -34,5 +40,6 @@ module.exports = {
   getPartnerBySlug,
   getAllPartners,
   updatePartnerById,
-  deletePartnerById
+  deletePartnerById,
+  getPartnerByOwnerId
 }

@@ -11,6 +11,7 @@ const createUser = async (userBody) => {
   }
 
   const otp = await otpService.generateOTP();
+  console.log("otp : ", otp)
 
   return User.create({ ...userBody, otp })
 }
@@ -27,7 +28,7 @@ const getUserByPhone = async (phone) => {
 
 
 const getUserById = async (userId) => {
-  const user = User.findOne({ _id: userId })
+  const user = await User.findOne({ _id: userId })
 
   if (!user) {
     throw new ApiError(httpStatus.NOT_FOUND, 'User not found');

@@ -5,6 +5,7 @@ const { ApiError, generateSlug } = require('../utils/')
 
 const createPartnerAccount = async (partner) => {
   let slug = generateSlug(partner.name);
+  console.log("Slug -> ", slug)
 
   if (await Partner.findOne({ slug })) {
     slug = generateSlug(partner.name + "-" + randomUUID())
@@ -40,14 +41,12 @@ const getAllPartners = async () => {
 };
 
 const updatePartnerById = async (partnerId, updateBody) => {
-  const partner = await Partner.findOne({ _id: partnerId });
-  if (!partner) {
-    throw new ApiError(httpStatus.NOT_FOUND, 'Partner not found');
-  }
+  const partner = await getPartnerById(partnerId);
 
   Object.assign(partner, updateBody);
-  await partner.save();
-  return partner;
+  console.log("updated partner =========> ", partner, updateBody)
+
+  return await partner.save();
 };
 
 const deletePartnerById = async (partnerId) => {

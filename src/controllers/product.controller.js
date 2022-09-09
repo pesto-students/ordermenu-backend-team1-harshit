@@ -22,8 +22,8 @@ const updateProductById = catchAsync(async (req, res) => {
 });
 
 const deleteProductById = catchAsync(async (req, res) => {
-  const product = await productService.deleteProductById(req.user._id, req.params.id)
-  res.send(product)
+  const productId = await productService.deleteProductById(req.user._id, req.params.id)
+  res.send(productId)
 });
 
 module.exports = {

@@ -5,6 +5,7 @@ const { ApiError } = require('../utils/')
 const tokenService = require('./token.service')
 const otpService = require('./otp.service')
 const userService = require('./user.service')
+const partnerService = require('./partner.service')
 
 const signin = async (phone) => {
   const user = await User.findOne({ phone });
@@ -19,10 +20,28 @@ const signin = async (phone) => {
   return { _id: user._id, phone: user.phone }
 };
 
+const signinAdmin = async (phone) => {
+  const user = await User.findOne({ phone });
+  if (!user) {
+    throw new ApiError(httpStatus.NOT_FOUND, 'User not found')
+  }
+
+  const partner = await partnerService.getPartnerByOwnerId(user?._id)
+  if (!partner) {
+    throw new ApiError(httpStatus.NOT_FOUND, 'User does not have a partner accound')
+  }
+
+  user.otp = await otpService.generateOTP();
+
+  console.log("otp -> ", user.otp);
+  user.save()
+  return { _id: user._id, phone: user.phone }
+};
+
 const signup = async (userInfo) => {
   const user = await userService.createUser(userInfo);
   return {
-    userId: user._id,
+    _id: user._id,
     phone: user.phone
   }
 }
@@ -52,6 +71,7 @@ const verifyOtp = async ({ userId, otp }) => {
 
 module.exports = {
   signin,
+  signinAdmin,
   signup,
   verifyOtp
 }

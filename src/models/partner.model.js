@@ -32,6 +32,10 @@ const ProductSchema = new mongoose.Schema({
     type: String,
     required: true
   },
+  category: {
+    type: String,
+    required: true,
+  },
   description: {
     type: String,
     required: true
@@ -70,6 +74,7 @@ const TableSchema = new mongoose.Schema({
 const PartnerSchema = new mongoose.Schema({
   name: {
     type: String,
+    required: true,
   },
   slug: {
     type: String,
@@ -77,30 +82,39 @@ const PartnerSchema = new mongoose.Schema({
   },
   tagline: {
     type: String,
+    default: ""
   },
   description: {
     type: String,
+    default: ""
   },
   address: {
     type: String,
+    default: ""
   },
   logo: {
     type: String,
+    default: ""
   },
   background: {
     type: String,
+    default: ""
   },
   ownerId: {
-    type: mongoose.SchemaTypes.ObjectId
+    type: mongoose.SchemaTypes.ObjectId,
+    required: true,
   },
   categories: {
-    type: [CategorySchema]
+    type: [CategorySchema],
+    default: []
   },
   menu: {
-    type: [ProductSchema]
+    type: [ProductSchema],
+    default: []
   },
   tables: {
-    type: [TableSchema]
+    type: [TableSchema],
+    default: []
   },
 }, { timestamps: true });
 

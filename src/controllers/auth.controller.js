@@ -7,6 +7,11 @@ const signin = catchAsync(async (req, res) => {
   res.send(user);
 });
 
+const signinAdmin = catchAsync(async (req, res) => {
+  const user = await authService.signinAdmin(req.body.phone);
+  res.send(user);
+});
+
 const signup = catchAsync(async (req, res) => {
   const user = await authService.signup(req.body);
   res.send(user);
@@ -22,5 +27,6 @@ const verifyOtp = catchAsync(async (req, res) => {
 module.exports = {
   signin,
   signup,
-  verifyOtp
+  verifyOtp,
+  signinAdmin
 }

@@ -12,6 +12,12 @@ const getUserById = catchAsync(async (req, res) => {
   res.send(user)
 });
 
+const getCurrentUserDetails = catchAsync(async (req, res) => {
+  console.log("user => ", req.user)
+  const user = await userService.getUserById(req.user);
+  res.send(user)
+});
+
 const updateUserById = catchAsync(async (req, res) => {
   const user = await userService.updateUserById(req.params.id, req.body);
   res.send(user)
@@ -26,5 +32,6 @@ module.exports = {
   createUser,
   getUserById,
   updateUserById,
-  getAllUsers
+  getAllUsers,
+  getCurrentUserDetails
 }

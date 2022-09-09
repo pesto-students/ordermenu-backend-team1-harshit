@@ -12,8 +12,8 @@ const createOrder = async (userId, orderDetails) => {
   const user = await userService.getUserById(userId);
   const partner = await partnerService.getPartnerById(orderDetails.partnerId)
 
-  const table = partner.tables.find((t) => t._id == orderDetails.tableId)
-  if (!table)
+  const tableIndex = partner.tables.findIndex((t) => t._id == orderDetails.tableId)
+  if (tableIndex < 0)
     throw new ApiError(httpStatus.NOT_FOUND, "Table not found!")
 
   let totalBillAmount = 0;
@@ -24,12 +24,14 @@ const createOrder = async (userId, orderDetails) => {
     return productInfo
   })
 
+  partner.tables[tableIndex].isBooked = true;
+  partner.save()
 
   const order = {
     userId: user._id,
     partnerId: partner._id,
     user: {
-      name: user.name,
+      name: user.firstName + " " + user.lastName,
       phone: user.phone,
       email: user.email
     },
@@ -38,7 +40,7 @@ const createOrder = async (userId, orderDetails) => {
       address: partner.address,
       logo: partner.logo
     },
-    tableNumber: table.number,
+    tableNumber: partner.tables[tableIndex].number,
     totalBillAmount,
     products
   }
@@ -53,8 +55,8 @@ const getProductInfo = (product, products) => {
     id: productInfo._id,
     name: productInfo.name,
     price: productInfo.price,
-    size: productInfo.sizes.map(s => s._id == product.size)[0] || { name: "Regular", price: 0 },
-    extra: productInfo.extra.map(e => e._id == product.extra)[0] || { name: "Regular", price: 0 },
+    size: productInfo.sizes.find(s => s._id == product.size) || { name: "Regular", price: 0 },
+    extra: productInfo.extra.find(e => e._id == product.extra) || { name: "Regular", price: 0 },
     quantity: product.quantity
   }
 }
@@ -69,6 +71,19 @@ const getOrderById = async (orderId) => {
 const getAllOrdersOfPartner = async (partnerId) => {
   const orders = Order.find({ partnerId })
   return orders
+}
+
+const getOrderStats = async (partnerId) => {
+  const orders = await Order.find({ partnerId })
+
+  console.log("Orders : ", orders)
+
+  return {
+    totalOrders: orders.length,
+    pendingOrders: orders.filter((order) => order.status === orderStatusOptions.PENDING).length,
+    acceptedOrders: orders.filter((order) => order.status === orderStatusOptions.ACCEPTED).length,
+    completedOrders: orders.filter((order) => order.status === orderStatusOptions.COMPLETED).length
+  }
 }
 
 const getAllOrdersOfUser = async (userId) => {
@@ -86,15 +101,11 @@ const updateOrderStatusById = async (orderId, status) => {
   return await order.save()
 }
 
-const deleteOrderById = async (req, res) => {
-
-}
-
 module.exports = {
   createOrder,
   getOrderById,
   getAllOrdersOfPartner,
   getAllOrdersOfUser,
   updateOrderStatusById,
-  deleteOrderById
+  getOrderStats
 }

@@ -10,7 +10,7 @@ const createCategory = async (ownerId, category) => {
 
   partner.categories.push(category)
   partner.save()
-  return category
+  return partner.categories[partner.categories.length - 1]
 };
 
 const getCategoryById = async (ownerId, categoryId) => {
@@ -39,7 +39,8 @@ const updateCategoryById = async (ownerId, categoryId, category) => {
   if (category?.name) partner.categories.id(categoryId).name = category?.name;
   if (category?.image) partner.categories.id(categoryId).image = category?.image;
   if (category?.description) partner.categories.id(categoryId).description = category?.description;
-  return partner.save()
+  partner.save()
+  return partner.categories.find(c => c._id == categoryId)
 };
 
 const deleteCategoryById = async (ownerId, categoryId) => {

@@ -10,7 +10,7 @@ const createProduct = async (ownerId, product) => {
 
   partner.menu.push(product)
   partner.save()
-  return product
+  return partner.menu[partner.menu.length - 1]
 };
 
 const getProductById = async (ownerId, productId) => {
@@ -39,10 +39,12 @@ const updateProductById = async (ownerId, productId, product) => {
   if (product?.image) partner.menu.id(productId).image = product?.image;
   if (product?.description) partner.menu.id(productId).description = product?.description;
   if (product?.price) partner.menu.id(productId).price = product?.price;
+  if (product?.category) partner.menu.id(productId).category = product?.category;
   if (product?.sizes) partner.menu.id(productId).sizes = product?.sizes;
   if (product?.extra) partner.menu.id(productId).extra = product?.extra;
   if (product?.tags) partner.menu.id(productId).tags = product?.tags;
-  return partner.save()
+  partner.save()
+  return partner.menu.find((p) => p._id == productId)
 };
 
 const deleteProductById = async (ownerId, productId) => {
@@ -52,7 +54,8 @@ const deleteProductById = async (ownerId, productId) => {
   if (index < 0)
     throw new ApiError(httpStatus.NOT_FOUND, "Product not found!")
   partner.menu.id(productId).remove()
-  return partner.save()
+  partner.save()
+  return productId
 };
 
 module.exports = {
