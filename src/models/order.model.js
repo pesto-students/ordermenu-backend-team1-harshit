@@ -1,5 +1,7 @@
 const mongoose = require('mongoose');
 const constant = require('../config/constants');
+const { paginate } = require('./plugins');
+
 const ProductOptionsSchema = new mongoose.Schema({
     name: {
         type: String,
@@ -86,7 +88,10 @@ const OrderSchema = new mongoose.Schema({
         required: true
     },
     products: [ProductSchema],
-    completedAt: { type: Date }
+    completedAt: { type: Date },
+    paymentInfo: { type: mongoose.SchemaTypes.Mixed }
 }, { timestamps: true });
+
+OrderSchema.plugin(paginate)
 
 module.exports = mongoose.model('Order', OrderSchema)

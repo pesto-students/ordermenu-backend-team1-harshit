@@ -3,7 +3,7 @@ module.exports = {
         PENDING: "PENDING",
         ACCEPTED: "ACCEPTED",
         COMPLETED: "COMPLETED",
-        CANCELE: "CANCELED",
+        CANCELLED: "CANCELLED",
     },
     userTypes: {
         USER: "USER",
@@ -15,12 +15,6 @@ module.exports = {
         REFRESH: 'refresh',
     },
     otp: {
-        OTP_LENGTH: 6,
-        OTP_CONFIG: {
-            digits: true,
-            lowerCaseAlphabets: false,
-            upperCaseAlphabets: false,
-            specialChars: false,
-        }
+        OTP_LENGTH: 6
     }
 }

@@ -3,6 +3,7 @@ class ApiError extends Error {
         super(message);
         this.statusCode = statusCode;
         this.isOperational = isOperational;
+        console.log("STACK => ", stack)
         if (stack) {
             this.stack = stack;
         } else {

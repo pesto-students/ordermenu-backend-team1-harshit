@@ -1,8 +1,14 @@
+const pick = require('../utils/pick');
 const { catchAsync } = require('../utils');
 const { orderService } = require('../services/')
 
 const createOrder = catchAsync(async (req, res) => {
   const order = await orderService.createOrder(req.user._id, req.body)
+  res.send(order);
+});
+
+const orderCheckout = catchAsync(async (req, res) => {
+  const order = await orderService.orderCheckout(req.user._id, req.body)
   res.send(order);
 });
 
@@ -12,7 +18,11 @@ const getOrderById = catchAsync(async (req, res) => {
 });
 
 const getAllOrdersOfPartner = catchAsync(async (req, res) => {
-  const orders = await orderService.getAllOrdersOfPartner(req.params.id)
+  const filter = pick(req.query, ['status']);
+  filter.partnerId = req.params.id
+  const options = pick(req.query, ['sortBy', 'limit', 'page']);
+
+  const orders = await orderService.getAllOrdersOfPartner(filter, options)
   res.send(orders);
 });
 
@@ -38,5 +48,6 @@ module.exports = {
   getAllOrdersOfPartner,
   getAllOrdersOfUser,
   updateOrderStatusById,
-  getOrderStats
+  getOrderStats,
+  orderCheckout
 }

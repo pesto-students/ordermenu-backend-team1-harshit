@@ -4,10 +4,14 @@ const { ApiError } = require('../utils/')
 const { orderStatusOptions } = require('../config/constants')
 const partnerService = require('./partner.service')
 const userService = require('./user.service')
+const { createRazorpayOrder } = require('./payment.service')
 
 const createOrder = async (userId, orderDetails) => {
   if (!orderDetails.products.length > 0)
     throw new ApiError(httpStatus.BAD_REQUEST, "Please add product to a make order.")
+
+  if (!orderDetails.paymentInfo)
+    throw new ApiError(httpStatus.BAD_REQUEST, "Payment is required to make an order.")
 
   const user = await userService.getUserById(userId);
   const partner = await partnerService.getPartnerById(orderDetails.partnerId)
@@ -40,12 +44,33 @@ const createOrder = async (userId, orderDetails) => {
       address: partner.address,
       logo: partner.logo
     },
+    paymentInfo: orderDetails?.paymentInfo,
     tableNumber: partner.tables[tableIndex].number,
     totalBillAmount,
     products
   }
 
+  const o = await createRazorpayOrder(totalBillAmount)
+  console.log("============ORDER===========", o)
+
   return Order.create(order);
+}
+
+const orderCheckout = async (userId, orderDetails) => {
+  if (!orderDetails.products.length > 0)
+    throw new ApiError(httpStatus.BAD_REQUEST, "Please add product to a make order.")
+
+  const partner = await partnerService.getPartnerById(orderDetails.partnerId)
+
+  let totalBillAmount = 0;
+
+  orderDetails?.products?.map(product => {
+    const productInfo = getProductInfo(product, partner.menu)
+    totalBillAmount = +productInfo.price + (+productInfo.size.price || 0) + (+productInfo.extra.price || 0)
+    return productInfo
+  })
+
+  return await createRazorpayOrder(totalBillAmount * 100);
 }
 
 const getProductInfo = (product, products) => {
@@ -68,8 +93,8 @@ const getOrderById = async (orderId) => {
   return order
 }
 
-const getAllOrdersOfPartner = async (partnerId) => {
-  const orders = Order.find({ partnerId })
+const getAllOrdersOfPartner = async (filter, options) => {
+  const orders = Order.paginate(filter, options)
   return orders
 }
 
@@ -105,5 +130,6 @@ module.exports = {
   getAllOrdersOfPartner,
   getAllOrdersOfUser,
   updateOrderStatusById,
-  getOrderStats
+  getOrderStats,
+  orderCheckout
 }

@@ -16,14 +16,14 @@ const createPartnerAccount = async (partner) => {
 const getPartnerBySlug = async (slug) => {
   const partner = Partner.findOne({ slug })
   if (!partner)
-    throw new ApiError(httpStatus.NotFound, "Partner not found!")
+    throw new ApiError(httpStatus.NOT_FOUND, "Partner not found!")
   return partner
 };
 
 const getPartnerById = async (id) => {
   const partner = Partner.findOne({ _id: id })
   if (!partner)
-    throw new ApiError(httpStatus.NotFound, "Partner not found!")
+    throw new ApiError(httpStatus.NOT_FOUND, "Partner not found!")
   return partner
 };
 
@@ -31,7 +31,7 @@ const getPartnerByOwnerId = async (ownerId) => {
   const partner = await Partner.findOne({ ownerId })
 
   if (!partner)
-    throw new ApiError(httpStatus.NotFound, "Partner not found!")
+    throw new ApiError(httpStatus.NOT_FOUND, "Partner not found!")
   return partner
 };
 

@@ -59,5 +59,9 @@ module.exports = {
             accessKey: envVars.AWS_ACCESS_KEY,
             secretKey: envVars.AWS_SECRET_KEY
         }
+    },
+    razorpay: {
+        keyId: envVars.RAZORPAY_KEY_ID,
+        keySecret: envVars.RAZORPAY_SECRET
     }
 };

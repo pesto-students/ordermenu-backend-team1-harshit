@@ -15,22 +15,29 @@ const signin = async (phone) => {
 
   user.otp = await otpService.generateOTP();
 
+  console.log("User OTP : ", user.otp)
+
   user.save()
   return { _id: user._id, phone: user.phone }
 };
 
 const signinAdmin = async (phone) => {
   const user = await User.findOne({ phone });
+  console.log("SinginAdmin => ", user)
+
   if (!user) {
     throw new ApiError(httpStatus.NOT_FOUND, 'User not found')
   }
 
   const partner = await partnerService.getPartnerByOwnerId(user?._id)
+  console.log("SinginAdmin => Partner => ", partner)
   if (!partner) {
-    throw new ApiError(httpStatus.NOT_FOUND, 'User does not have a partner accound')
+    throw new ApiError(httpStatus.NOT_FOUND, 'User does not have a partner account')
   }
 
   user.otp = await otpService.generateOTP();
+
+  console.log("Admin OTP : ", user.otp)
 
   user.save()
   return { _id: user._id, phone: user.phone }
