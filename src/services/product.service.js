@@ -32,7 +32,7 @@ const updateProductById = async (ownerId, productId, product) => {
   if (index < 0)
     throw new ApiError(httpStatus.NOT_FOUND, "Product not found!")
 
-  if (partner.menu.find(menuItem => menuItem?.name?.toLowerCase() === product?.name?.toLowerCase()))
+  if (partner.menu.find(menuItem => menuItem?.name?.toLowerCase() === product?.name?.toLowerCase() && menuItem?._id != productId))
     throw new ApiError(httpStatus.BAD_REQUEST, `Product with name '${product.name}' already exists!`)
 
   if (product?.name) partner.menu.id(productId).name = product?.name;

@@ -16,8 +16,6 @@ const createRazorpayOrder = async (amount) => {
     receipt: randomUUID(),
   })
 
-  console.log("ORDER ::::: ", order)
-
   return order
 };
 

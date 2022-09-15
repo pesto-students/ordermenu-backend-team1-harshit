@@ -15,29 +15,24 @@ const signin = async (phone) => {
 
   user.otp = await otpService.generateOTP();
 
-  console.log("User OTP : ", user.otp)
-
   user.save()
   return { _id: user._id, phone: user.phone }
 };
 
 const signinAdmin = async (phone) => {
   const user = await User.findOne({ phone });
-  console.log("SinginAdmin => ", user)
 
   if (!user) {
     throw new ApiError(httpStatus.NOT_FOUND, 'User not found')
   }
 
   const partner = await partnerService.getPartnerByOwnerId(user?._id)
-  console.log("SinginAdmin => Partner => ", partner)
+
   if (!partner) {
     throw new ApiError(httpStatus.NOT_FOUND, 'User does not have a partner account')
   }
 
   user.otp = await otpService.generateOTP();
-
-  console.log("Admin OTP : ", user.otp)
 
   user.save()
   return { _id: user._id, phone: user.phone }
@@ -73,10 +68,24 @@ const verifyOtp = async ({ userId, otp }) => {
   throw new ApiError(httpStatus.UNAUTHORIZED, "OTP is invalid. Plesae enter correct otp.")
 };
 
+const refreshAuth = async (refreshToken) => {
+  try {
+    const refreshTokenDoc = await tokenService.verifyToken(refreshToken, tokenTypes.REFRESH);
+    const user = await userService.getUserById(refreshTokenDoc.user);
+    if (!user) {
+      throw new Error();
+    }
+    await refreshTokenDoc.remove();
+    return tokenService.generateAuthTokens(user);
+  } catch (error) {
+    throw new ApiError(httpStatus.UNAUTHORIZED, 'Please authenticate');
+  }
+};
 
 module.exports = {
   signin,
   signinAdmin,
   signup,
-  verifyOtp
+  verifyOtp,
+  refreshAuth
 }
