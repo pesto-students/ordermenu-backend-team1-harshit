@@ -60,6 +60,7 @@ const deleteTableById = async (ownerId, tableId) => {
   if (index < 0)
     throw new ApiError(httpStatus.NOT_FOUND, "Table not found!")
   partner.tables.id(tableId).remove()
+  partner.save()
   return tableId
 };
 
