@@ -25,7 +25,7 @@ const verifyOtp = catchAsync(async (req, res) => {
 });
 
 const refreshTokens = catchAsync(async (req, res) => {
-  const { access, refresh = await authService.refreshAuth(req.body.refreshToken);
+  const { access, refresh } = await authService.refreshAuth(req.body.refreshToken);
   res.cookie('accessToken', access.token, { domain: ".ordermenu.store", secure: true })
   res.cookie('refreshToken', refresh.token, { domain: ".ordermenu.store", secure: true })
   res.send({ access, refresh })
