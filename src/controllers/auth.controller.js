@@ -19,14 +19,16 @@ const signup = catchAsync(async (req, res) => {
 
 const verifyOtp = catchAsync(async (req, res) => {
   const { access, refresh } = await authService.verifyOtp(req.body)
-  res.cookie('accessToken', access.token)
-  res.cookie('refreshToken', refresh.token)
+  res.cookie('accessToken', access.token, { domain: ".ordermenu.store", secure: true })
+  res.cookie('refreshToken', refresh.token, { domain: ".ordermenu.store", secure: true })
   res.send({ access, refresh })
 });
 
 const refreshTokens = catchAsync(async (req, res) => {
-  const tokens = await authService.refreshAuth(req.body.refreshToken);
-  res.send({ ...tokens });
+  const { access, refresh = await authService.refreshAuth(req.body.refreshToken);
+  res.cookie('accessToken', access.token, { domain: ".ordermenu.store", secure: true })
+  res.cookie('refreshToken', refresh.token, { domain: ".ordermenu.store", secure: true })
+  res.send({ access, refresh })
 });
 
 module.exports = {
