@@ -51,7 +51,6 @@ const createOrder = async (userId, orderDetails) => {
   }
 
   const o = await createRazorpayOrder(totalBillAmount)
-  console.log("============ORDER===========", o)
 
   return Order.create(order);
 }

@@ -29,11 +29,11 @@ const getAllCategories = async (ownerId) => {
 
 const updateCategoryById = async (ownerId, categoryId, category) => {
   const partner = await partnerService.getPartnerByOwnerId(ownerId)
-  const index = partner.categories.findIndex(category => category._id == categoryId)
+  const index = partner.categories.find(category => category._id == categoryId)
   if (index < 0)
     throw new ApiError(httpStatus.NOT_FOUND, "Category not found!")
 
-  if (partner.categories.find(c => c.name.toLowerCase() === category.name.toLowerCase()))
+  if (partner.categories.find(c => c.name.toLowerCase() === category.name.toLowerCase() && c._id != categoryId))
     throw new ApiError(httpStatus.BAD_REQUEST, `Category with name '${category.name}' already exists!`)
 
   if (category?.name) partner.categories.id(categoryId).name = category?.name;

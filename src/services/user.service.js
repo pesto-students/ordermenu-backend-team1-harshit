@@ -11,7 +11,6 @@ const createUser = async (userBody) => {
   }
 
   const otp = await otpService.generateOTP();
-  console.log("otp : ", otp)
 
   return User.create({ ...userBody, otp })
 }

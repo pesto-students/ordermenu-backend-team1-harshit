@@ -11,7 +11,7 @@ const createTable = async (ownerId, tableNumber) => {
   if (partner.tables.find(table => +table.number === +tableNumber))
     throw new ApiError(httpStatus.BAD_REQUEST, `Table with table number '${tableNumber}' already exists!`)
 
-  const url = `http://localhost:3000/${partner.slug}?table=${tableNumber}`
+  const url = `http://www.ordermenu.store/${partner.slug}?table=${tableNumber}`
 
   const file = await qrService.generateQR(url);
   const uploadedFile = await uploadService.uploadFile(file);

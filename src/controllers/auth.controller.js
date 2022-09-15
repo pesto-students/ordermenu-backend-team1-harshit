@@ -24,9 +24,15 @@ const verifyOtp = catchAsync(async (req, res) => {
   res.send({ access, refresh })
 });
 
+const refreshTokens = catchAsync(async (req, res) => {
+  const tokens = await authService.refreshAuth(req.body.refreshToken);
+  res.send({ ...tokens });
+});
+
 module.exports = {
   signin,
   signup,
   verifyOtp,
-  signinAdmin
+  signinAdmin,
+  refreshTokens
 }
