@@ -30,8 +30,10 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 // enable cors
-app.use(cors());
-app.options('*', cors());
+app.use(cors({
+    origin: ["https://ordermenu.store", "https://www.ordermenu.store", "https://admin.ordermenu.store"],
+    credentials: true
+}));
 
 // jwt authentication
 app.use(passport.initialize());
