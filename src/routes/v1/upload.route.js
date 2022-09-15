@@ -5,6 +5,6 @@ const { uploadController } = require('../../controllers/')
 
 const router = express.Router();
 
-router.post('/upload', uploadController.uploadFile);
+router.post('/upload', auth('upload'), uploadController.uploadFile);
 
 module.exports = router
