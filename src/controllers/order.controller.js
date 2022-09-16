@@ -41,6 +41,9 @@ const updateOrderStatusById = catchAsync(async (req, res) => {
   res.send(order);
 });
 
+const subscribeOrders = catchAsync(async (req, res) => {
+  orderService.subscribeOrders(req, res)
+});
 
 module.exports = {
   createOrder,
@@ -49,5 +52,6 @@ module.exports = {
   getAllOrdersOfUser,
   updateOrderStatusById,
   getOrderStats,
-  orderCheckout
+  orderCheckout,
+  subscribeOrders
 }

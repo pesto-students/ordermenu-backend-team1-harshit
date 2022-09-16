@@ -7,6 +7,7 @@ const router = express.Router();
 
 router.post('/orders', auth("createOrder"), orderController.createOrder);
 router.get('/orders', auth("orders"), orderController.getAllOrdersOfUser);
+router.get('/orders-subscribe', auth("orders"), orderController.subscribeOrders);
 router.post('/orders/checkout', auth("createOrder"), orderController.orderCheckout);
 router.get('/orders/partners/:id', auth("orders"), orderController.getAllOrdersOfPartner);
 router.get('/orders/stats/:id', auth("orders"), orderController.getOrderStats);

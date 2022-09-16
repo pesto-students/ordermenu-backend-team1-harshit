@@ -24,7 +24,7 @@ const createOrder = async (userId, orderDetails) => {
 
   const products = orderDetails?.products?.map(product => {
     const productInfo = getProductInfo(product, partner.menu)
-    totalBillAmount = +productInfo.price + (+productInfo.size.price || 0) + (+productInfo.extra.price || 0)
+    totalBillAmount = totalBillAmount + ((+productInfo.price + (+productInfo.size.price || 0) + (+productInfo.extra.price || 0)) * product?.quantity)
     return productInfo
   })
 
@@ -50,7 +50,12 @@ const createOrder = async (userId, orderDetails) => {
     products
   }
 
-  return Order.create(order);
+  const newOrder = await Order.create(order)
+  writeEvent({
+    type: 'NEW_ORDER',
+    data: newOrder
+  })
+  return newOrder;
 }
 
 const orderCheckout = async (userId, orderDetails) => {
@@ -63,9 +68,10 @@ const orderCheckout = async (userId, orderDetails) => {
 
   orderDetails?.products?.map(product => {
     const productInfo = getProductInfo(product, partner.menu)
-    totalBillAmount = +productInfo.price + (+productInfo.size.price || 0) + (+productInfo.extra.price || 0)
+    totalBillAmount = totalBillAmount + ((+productInfo.price + (+productInfo.size.price || 0) + (+productInfo.extra.price || 0)) * product?.quantity)
     return productInfo
   })
+
 
   return await createRazorpayOrder(totalBillAmount * 100);
 }
@@ -121,6 +127,37 @@ const updateOrderStatusById = async (orderId, status) => {
   return await order.save()
 }
 
+var eventStream;
+
+const writeEvent = (data) => {
+  const sseId = new Date().toDateString();
+  eventStream.write(`id: ${sseId}\n`);
+  eventStream.write(`data: ${JSON.stringify(data)}\n\n`);
+};
+
+const sendEvent = (_req, res) => {
+  res.writeHead(200, {
+    'Cache-Control': 'no-cache',
+    Connection: 'keep-alive',
+    'Content-Type': 'text/event-stream',
+  });
+
+  eventStream = res;
+  writeEvent({
+    type: 'MESSAGE',
+    message: "Hi there! You have successfully subscribed."
+  });
+};
+
+
+const subscribeOrders = async (req, res) => {
+  if (req.headers.accept === 'text/event-stream') {
+    sendEvent(req, res);
+  } else {
+    res.json({ message: 'Ok' });
+  }
+}
+
 module.exports = {
   createOrder,
   getOrderById,
@@ -128,5 +165,6 @@ module.exports = {
   getAllOrdersOfUser,
   updateOrderStatusById,
   getOrderStats,
-  orderCheckout
+  orderCheckout,
+  subscribeOrders
 }
