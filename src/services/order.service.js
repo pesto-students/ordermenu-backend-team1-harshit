@@ -131,9 +131,16 @@ var eventStream;
 
 const writeEvent = (data) => {
   const sseId = new Date().toDateString();
-  eventStream.write(`id: ${sseId}\n`);
-  eventStream.write(`data: ${JSON.stringify(data)}\n\n`);
+  eventStream?.write(`id: ${sseId}\n`);
+  eventStream?.write(`data: ${JSON.stringify(data)}\n\n`);
 };
+
+setInterval(() => {
+  writeEvent({
+    type: 'MESSAGE',
+    message: "Hi there! Sending a message to you."
+  })
+}, 60 * 1000)
 
 const sendEvent = (_req, res) => {
   res.writeHead(200, {
@@ -141,6 +148,7 @@ const sendEvent = (_req, res) => {
     Connection: 'keep-alive',
     'Content-Type': 'text/event-stream',
   });
+
 
   eventStream = res;
   writeEvent({
