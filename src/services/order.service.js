@@ -136,7 +136,7 @@ const writeEvent = (data) => {
 };
 
 
-const sendEvent = (_req, res) => {
+const sendEvent = (req, res) => {
   res.writeHead(200, {
     'Cache-Control': 'no-cache',
     Connection: 'keep-alive',
