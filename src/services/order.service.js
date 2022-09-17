@@ -140,6 +140,7 @@ setInterval(() => {
     type: 'MESSAGE',
     message: "Hi there! Sending a message to you."
   })
+  eventStream?.flush();
 }, 60 * 1000)
 
 const sendEvent = (_req, res) => {
