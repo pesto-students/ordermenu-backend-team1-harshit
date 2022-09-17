@@ -32,7 +32,11 @@ const getOrderStats = catchAsync(async (req, res) => {
 });
 
 const getAllOrdersOfUser = catchAsync(async (req, res) => {
-  const orders = await orderService.getAllOrdersOfUser(req.user._id)
+  const filter = pick(req.query, ['status']);
+  filter.userId = req.user
+  const options = pick(req.query, ['sortBy', 'limit', 'page']);
+
+  const orders = await orderService.getAllOrdersOfUser(filter, options)
   res.send(orders);
 });
 

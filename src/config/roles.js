@@ -1,6 +1,6 @@
 const allRoles = {
-  USER: ['createOrder', 'upload', 'updateUser'],
-  OWNER: ['categories', 'createOrder', 'orders', 'partners', 'products', 'tables', 'upload', 'updateUser', 'manageUser'],
+  USER: ['createOrder', 'upload', 'updateUser', 'getOrders'],
+  OWNER: ['categories', 'createOrder', 'getOrders', 'orders', 'partners', 'products', 'tables', 'upload', 'updateUser', 'manageUser'],
 
 };
 

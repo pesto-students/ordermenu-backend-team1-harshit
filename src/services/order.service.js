@@ -112,8 +112,8 @@ const getOrderStats = async (partnerId) => {
   }
 }
 
-const getAllOrdersOfUser = async (userId) => {
-  const orders = Order.find({ userId })
+const getAllOrdersOfUser = async (filter, options) => {
+  const orders = Order.paginate(filter, options)
   return orders
 }
 
