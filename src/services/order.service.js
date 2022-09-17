@@ -135,13 +135,6 @@ const writeEvent = (data) => {
   eventStream?.write(`data: ${JSON.stringify(data)}\n\n`);
 };
 
-setInterval(() => {
-  writeEvent({
-    type: 'MESSAGE',
-    message: "Hi there! Sending a message to you."
-  })
-  eventStream?.flush();
-}, 60 * 1000)
 
 const sendEvent = (_req, res) => {
   res.writeHead(200, {
@@ -150,12 +143,21 @@ const sendEvent = (_req, res) => {
     'Content-Type': 'text/event-stream',
   });
 
+  res.write('\n');
+
+  const intervalId = setInterval(() => {
+    writeEvent({
+      type: 'MESSAGE',
+      message: "Hi there! Sending a message to you."
+    })
+    eventStream?.flush();
+  }, 60 * 1000)
+
+  req.on('close', () => {
+    clearInterval(intervalId);
+  });
 
   eventStream = res;
-  writeEvent({
-    type: 'MESSAGE',
-    message: "Hi there! You have successfully subscribed."
-  });
 };
 
 
