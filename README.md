@@ -55,6 +55,7 @@ ordering food, and online payment.
 - Node Js
 - Express
 - MongoDb
+- Socket
 
 <!-- GETTING STARTED -->
 
@@ -89,6 +90,3 @@ First clone the repo and then perform the below steps
    npm start
    ```
 
-```
-
-```
