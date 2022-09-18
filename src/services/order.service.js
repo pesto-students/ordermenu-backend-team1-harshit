@@ -5,6 +5,7 @@ const { orderStatusOptions } = require('../config/constants')
 const partnerService = require('./partner.service')
 const userService = require('./user.service')
 const { createRazorpayOrder } = require('./payment.service')
+const io = require('./socket.service.js')
 
 const createOrder = async (userId, orderDetails) => {
   if (!orderDetails.products.length > 0)
@@ -51,10 +52,8 @@ const createOrder = async (userId, orderDetails) => {
   }
 
   const newOrder = await Order.create(order)
-  writeEvent({
-    type: 'NEW_ORDER',
-    data: newOrder
-  })
+
+  io.newOrder(partner?.id, newOrder)
   return newOrder;
 }
 
@@ -71,7 +70,6 @@ const orderCheckout = async (userId, orderDetails) => {
     totalBillAmount = totalBillAmount + ((+productInfo.price + (+productInfo.size.price || 0) + (+productInfo.extra.price || 0)) * product?.quantity)
     return productInfo
   })
-
 
   return await createRazorpayOrder(totalBillAmount * 100);
 }
@@ -127,44 +125,7 @@ const updateOrderStatusById = async (orderId, status) => {
   return await order.save()
 }
 
-var eventStream;
 
-const writeEvent = (data) => {
-  const sseId = new Date().toDateString();
-  eventStream?.write(`id: ${sseId}\n`);
-  eventStream?.write(`data: ${JSON.stringify(data)}\n\n`);
-};
-
-setInterval(() => {
-  writeEvent({
-    type: 'MESSAGE',
-    message: "Hi there! Sending a message to you."
-  })
-}, 60 * 1000)
-
-const sendEvent = (_req, res) => {
-  res.writeHead(200, {
-    'Cache-Control': 'no-cache',
-    Connection: 'keep-alive',
-    'Content-Type': 'text/event-stream',
-  });
-
-
-  eventStream = res;
-  writeEvent({
-    type: 'MESSAGE',
-    message: "Hi there! You have successfully subscribed."
-  });
-};
-
-
-const subscribeOrders = async (req, res) => {
-  if (req.headers.accept === 'text/event-stream') {
-    sendEvent(req, res);
-  } else {
-    res.json({ message: 'Ok' });
-  }
-}
 
 module.exports = {
   createOrder,
@@ -174,5 +135,4 @@ module.exports = {
   updateOrderStatusById,
   getOrderStats,
   orderCheckout,
-  subscribeOrders
 }
