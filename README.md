@@ -1,7 +1,7 @@
 <br />
 <div align="center">
   <a href="https://github.com/pesto-students/ordermenu-backend-team1-harshit">
-    <img src="/ordermenu-user/public/assets/logo.svg" alt="OrderMenu Logo" width="80" height="80">
+    <img src="/public/favicon.ico" alt="OrderMenu Logo" width="80" height="80">
   </a>
 </div>
 <h3 align="center">OrderMenu</h3>
