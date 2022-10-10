@@ -3,40 +3,8 @@
   <a href="https://github.com/pesto-students/ordermenu-backend-team1-harshit">
     <img src="/ordermenu-user/public/assets/logo.svg" alt="OrderMenu Logo" width="80" height="80">
   </a>
-
-<h3 align="center">OrderMenu</h3>
-
-  <p align="center">
-    <br />
-    <a href="https://github.com/pesto-students/ordermenu-backend-team1-harshit">View Demo</a>
-    ·
-    <a href="https://github.com/pesto-students/ordermenu-backend-team1-harshit/issues">Report Bug</a>
-    ·
-    <a href="https://github.com/pesto-students/ordermenu-backend-team1-harshit/issues">Request Feature</a>
-
-  </p>
 </div>
-
-<!-- TABLE OF CONTENTS -->
-<details>
-  <summary>Table of Contents</summary>
-  <ol>
-    <li>
-      <a href="#about-the-project">About The Project</a>
-      <ul>
-        <li><a href="#built-with">Built With</a></li>
-      </ul>
-    </li>
-    <li>
-      <a href="#getting-started">Getting Started</a>
-      <ul>
-        <li><a href="#prerequisites">Prerequisites</a></li>
-        <li><a href="#installation">Installation</a></li>
-      </ul>
-    </li>
-  </ol>
-</details>
-
+<h3 align="center">OrderMenu</h3>
 <!-- ABOUT THE PROJECT -->
 
 ## About The Project
@@ -50,12 +18,13 @@ online platform that solves all of these problems. For the restaurant, it involv
 online, online invoices, and billing. For the customer, it involves viewing seating availability, viewing the menu,
 ordering food, and online payment.
 
-### Built With
+## Table of Contents
 
-- Node Js
-- Express
-- MongoDb
-- Socket
+- <a href="#about-the-project">About The Project</a>
+- <a href="#getting-started">Installation</a>
+- <a href="#technology-stack">Technology Stack</a>
+- <a href="#authors">Authors</a>
+- <a href="#license">License</a>
 
 <!-- GETTING STARTED -->
 
@@ -90,3 +59,16 @@ First clone the repo and then perform the below steps
    npm start
    ```
 
+## Technology Stack
+
+- Node Js
+- Express
+- MongoDb
+- Socket
+
+## Authors
+- <a href="https://github.com/divyanshu-19">Divyanshu Gupta</a>
+- <a href="https://github.com/bhanukushwah">Bhanu Kushwah</a>
+
+## License
+<a href="https://opensource.org/licenses/MIT">MIT</a>
